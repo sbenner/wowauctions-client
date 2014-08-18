@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">wowauctions-client</string>
+    <!--<string name="prod.service.url">@@to_be_replaced_during_build_time@@</string>-->
+    <!--<string name="local.service.url">@@to_be_replaced_during_build_time@@</string>-->
+</resources>

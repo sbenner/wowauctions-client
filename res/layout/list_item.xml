@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+
+        >
+
+    <TextView android:id="@+id/itemname"
+              android:paddingLeft="5px"
+              android:textColor="#3ccbf5"
+              android:textStyle="bold"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"/>
+    <TextView android:id="@+id/itemlevel"
+              android:paddingLeft="5px"
+              android:textStyle="bold"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/itemname"
+            />
+    <TextView android:id="@+id/owner"
+              android:paddingLeft="5px"
+              android:textStyle="bold"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/itemlevel"
+            />
+    <TextView android:id="@+id/bid"
+              android:paddingLeft="5px"
+              android:textStyle="bold"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/owner"
+            />
+
+    <TextView android:id="@+id/buyout"
+              android:paddingLeft="5px"
+              android:textStyle="bold"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/bid"
+            />
+
+    <TextView android:id="@+id/quantity"
+              android:paddingLeft="5px"
+              android:textStyle="bold"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_below="@+id/buyout"
+            />
+
+
+</RelativeLayout>
