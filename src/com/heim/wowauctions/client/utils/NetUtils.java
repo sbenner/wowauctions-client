@@ -5,6 +5,7 @@ import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.params.ClientPNames;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.*;
@@ -29,6 +30,7 @@ public class NetUtils {
 
             HttpGet httpGet = new HttpGet(url);
             DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
+            defaultHttpClient.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
             HttpResponse response = defaultHttpClient.execute(httpGet);
             HttpEntity entity = response.getEntity();
             InputStream is = entity.getContent();

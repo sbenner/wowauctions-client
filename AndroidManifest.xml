@@ -17,6 +17,7 @@
             </intent-filter>
 
         </activity>
+        <activity android:name=".ui.WebActivity"/>
         <activity android:name="org.achartengine.GraphicalActivity" android:theme="@android:style/Theme.NoTitleBar"/>
 
     </application>

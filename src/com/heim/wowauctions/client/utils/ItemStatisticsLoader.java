@@ -60,7 +60,7 @@ public class ItemStatisticsLoader extends AsyncTask<Long, Void, Pair<String, XYM
 
         long averagePrice = 0;
 
-        String auctions = NetUtils.getResourceFromUrl("http://192.168.1.4:8080/itemchart?id=" + params[0].toString());
+        String auctions = NetUtils.getResourceFromUrl("http://10.0.2.2:8080/itemchart?id=" + params[0].toString());
         Map<Long, Long> auctionList = null;
         try {
             auctionList = AuctionUtils.buildArchivedAuctionsFromString(auctions);

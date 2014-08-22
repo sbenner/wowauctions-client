@@ -1,5 +1,6 @@
 package com.heim.wowauctions.client.ui;
 
+import android.util.Log;
 import android.widget.AbsListView;
 
 /**
@@ -9,7 +10,7 @@ import android.widget.AbsListView;
  * Time: 3:15 AM
  */
 public abstract class InfiniteScrollListener implements AbsListView.OnScrollListener {
-    private int bufferItemCount = 20;
+    private int bufferItemCount = 5;
     private int currentPage = 0;
     private int itemCount = 0;
     private boolean isLoading = true;
@@ -41,7 +42,7 @@ public abstract class InfiniteScrollListener implements AbsListView.OnScrollList
             currentPage++;
         }
 
-        if (!isLoading && (totalItemCount - visibleItemCount)<=(firstVisibleItem + bufferItemCount)) {
+         if (!isLoading && (view.getLastVisiblePosition()>=(totalItemCount-(totalItemCount/3)))) {
             loadMore(currentPage + 1, totalItemCount);
             isLoading = true;
         }

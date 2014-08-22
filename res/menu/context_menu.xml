@@ -4,7 +4,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
             android:id="@+id/chart"
-            android:title="Show price deviation shart for this item"
+            android:title="Price chart for this item"
             />
     <item
             android:id="@+id/item_info"

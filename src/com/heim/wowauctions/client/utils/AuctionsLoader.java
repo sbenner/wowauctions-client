@@ -38,7 +38,6 @@ public class AuctionsLoader extends AsyncTask<String, Void, Reply> {
 
 
         List<Auction> dataset = reply.getAuctions();
-
         ListActivity lv = (ListActivity) this.ctx;
 
         if (dataset != null &&
@@ -77,9 +76,9 @@ public class AuctionsLoader extends AsyncTask<String, Void, Reply> {
         Log.v("started", searchString);
 
         if (params.length == 1)
-            auctions = NetUtils.getResourceFromUrl("http://192.168.1.4:8080/items?name=" + Uri.encode(searchString));
+            auctions = NetUtils.getResourceFromUrl("http://10.0.2.2:8080/items?name=" + Uri.encode(searchString));
         else
-            auctions = NetUtils.getResourceFromUrl("http://192.168.1.4:8080/items?name=" + Uri.encode(searchString) + "&page=" + params[1]);
+            auctions = NetUtils.getResourceFromUrl("http://10.0.2.2:8080/items?name=" + Uri.encode(searchString) + "&page=" + params[1]);
 
         Reply reply = null;
         try {

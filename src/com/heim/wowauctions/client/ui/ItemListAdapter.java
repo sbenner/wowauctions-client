@@ -81,6 +81,8 @@ public class ItemListAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
 
         Log.v("position", Integer.toString(position));
+
+
         ViewHolder viewHolder;
 
 
@@ -125,12 +127,12 @@ public class ItemListAdapter extends BaseAdapter {
                 viewHolder.tvItemName.setTextColor(Color.parseColor("#e5cc80")); //
             }
 
-            viewHolder.tvItemLevel.setText(String.valueOf(auction.getItem().getItemLevel()));
+            viewHolder.tvItemLevel.setText(String.valueOf("Item Level "+auction.getItem().getItemLevel()));
 
-            viewHolder.tvOwner.setText(auction.getOwner());
-            viewHolder.tvBid.setText(String.valueOf(auction.getBid()));
-            viewHolder.tvBuyout.setText(String.valueOf(auction.getBuyout()));
-            viewHolder.tvQuantity.setText(String.valueOf(auction.getQuantity()));
+            viewHolder.tvOwner.setText("Seller: "+auction.getOwner());
+            viewHolder.tvBid.setText("Bid: "+String.valueOf(auction.getBid()));
+            viewHolder.tvBuyout.setText("Buyout: "+String.valueOf(auction.getBuyout()));
+            viewHolder.tvQuantity.setText("Quantity: "+String.valueOf(auction.getQuantity()));
             viewHolder.itemId=auction.getItem().getId();
 
             convertView.setTag(viewHolder);

@@ -8,6 +8,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.*;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -16,6 +18,7 @@ import com.heim.wowauctions.client.models.Reply;
 import com.heim.wowauctions.client.ui.InfiniteScrollListener;
 import com.heim.wowauctions.client.ui.ItemListAdapter;
 import com.heim.wowauctions.client.ui.SearchDialog;
+import com.heim.wowauctions.client.ui.WebActivity;
 import com.heim.wowauctions.client.utils.AuctionsLoader;
 import com.heim.wowauctions.client.utils.ItemStatisticsLoader;
 
@@ -64,15 +67,19 @@ public class ItemPriceChartActivity extends ListActivity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Long itemId = ((ItemListAdapter.ViewHolder) info.targetView.getTag()).itemId;
-
+        String name =  ((ItemListAdapter.ViewHolder) info.targetView.getTag()).tvItemName.getText().toString();
         switch (item.getItemId()) {
             case R.id.chart:
                 new ItemStatisticsLoader(ItemPriceChartActivity.this).execute(itemId);
                 return true;
             case R.id.item_info:
-                String url = "http://us.battle.net/wow/en/item/" + itemId;
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(intent);
+
+                Intent myIntent = new Intent(ItemPriceChartActivity.this, WebActivity.class);
+
+                myIntent.putExtra("itemId", itemId);
+                myIntent.putExtra("name", name);
+
+                startActivity(myIntent);
                 return true;
         }
         return super.onContextItemSelected(item);
