@@ -45,7 +45,7 @@ public class ItemTooltipLoader extends AsyncTask<String, Void, String> {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
 
-        text = text.replace("//media", "http://media");
+        text = text.replace("//media", "http://media").replaceAll("<a\\b[^>]+>","").replaceAll("</a>","");
         //http://www.wowdb.com/tooltips
         String summary = "<html>" +
                 "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></script>" +
@@ -67,7 +67,7 @@ public class ItemTooltipLoader extends AsyncTask<String, Void, String> {
 
         String url = "http://www.wowdb.com/items/" + params[0] + "/tooltip";
 
-        String text = NetUtils.getResourceFromUrl(url);
+        String text = NetUtils.getResourceFromUrl(url,null);
         text = text.substring(1, text.length() - 1);
 
 

@@ -11,15 +11,18 @@ import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.util.Pair;
 import android.widget.EditText;
+import com.heim.wowauctions.client.utils.AuctionsApplication;
 import com.heim.wowauctions.client.utils.AuctionsLoader;
 
 public class SearchDialog extends AlertDialog.Builder {
 
 
-    public SearchDialog(final Context activity) {
+    public SearchDialog(final Context activity,final Pair p) {
 
         super(activity);
+
 
         AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(activity);
         final EditText editText = new EditText(activity);
@@ -28,7 +31,7 @@ public class SearchDialog extends AlertDialog.Builder {
                 .setView(editText)
                 .setPositiveButton("Search", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        new AuctionsLoader(activity).execute(editText.getText().toString().trim());
+                        new AuctionsLoader(activity,p).execute(editText.getText().toString().trim());
 
                     }
                 })

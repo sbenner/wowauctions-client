@@ -19,26 +19,51 @@ import java.io.*;
 
 public class NetUtils {
 
+    private static HttpGet createGetRequest(String url,String key) throws Exception{
 
-    public static String getResourceFromUrl(String url) {
+        HttpGet httpGet = new HttpGet(url);
+         if(key!=null){
+             httpGet.addHeader("apikey","RS00001");
+             httpGet.addHeader("timestamp",""+System.currentTimeMillis());
+
+             try {
+                 httpGet.addHeader("signature",CryptoUtils.createSignature(httpGet,key).replace("\n",""));
+             } catch (Exception e) {
+               throw e;
+             }
+         }
+
+        return httpGet;
+    }
+
+
+
+    public static String getResourceFromUrl(String url,String key) {
 
         StringBuilder sb = new StringBuilder();
 
         try {
 
 
+            HttpGet httpGet = null;
+            try {
+                httpGet = createGetRequest(url,key);
+            } catch (Exception e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
 
-            HttpGet httpGet = new HttpGet(url);
             DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
+
             defaultHttpClient.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
+
             HttpResponse response = defaultHttpClient.execute(httpGet);
             HttpEntity entity = response.getEntity();
             InputStream is = entity.getContent();
 
             if (response.getStatusLine().getStatusCode() != 200) {
-                throw new RuntimeException("Failed : HTTP error code : "
-                        + response.getStatusLine().getStatusCode());
-
+//                throw new RuntimeException("Failed : HTTP error code : "
+//                        + response.getStatusLine().getStatusCode());
+                return null;
             }
 
             BufferedReader br = new BufferedReader(new InputStreamReader(is));

@@ -1,10 +1,10 @@
 package com.heim.wowauctions.client.ui;
 
+import android.app.ListActivity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +12,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.heim.wowauctions.client.R;
 import com.heim.wowauctions.client.models.Auction;
+import com.heim.wowauctions.client.models.Reply;
+import com.heim.wowauctions.client.utils.AuctionsLoader;
 
 import java.util.List;
 
@@ -26,19 +28,28 @@ public class ItemListAdapter extends BaseAdapter {
 
     List dataList;
     Context context;
+    ListActivity lv;
+   String searchString;
+    private boolean isLoading=true;
+    int page=0;
     private static LayoutInflater inflater = null;
+    Pair pair;
 
 
-    public ItemListAdapter(Context context, List data) {
+    public ItemListAdapter(Context context, List data,Pair pair) {
 
         this.context = context;
         this.dataList = data;
-
+        lv = (ListActivity) this.context;
+        Reply reply = (Reply)lv.getListView().getTag();
+        this.pair=pair;
+        searchString = reply.getSearchString();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
     }
 
     public void addAll(List list) {
+        page++;
         this.dataList.addAll(list);
     }
 
@@ -53,6 +64,14 @@ public class ItemListAdapter extends BaseAdapter {
 
     public long getItemId(int position) {
         return position;
+    }
+
+    public boolean isLoading() {
+        return isLoading;
+    }
+
+    public void setLoading(boolean loading) {
+        isLoading = loading;
     }
 
     public static class ViewHolder {
@@ -139,6 +158,13 @@ public class ItemListAdapter extends BaseAdapter {
 
 
         }
+//
+        if(position>=(getCount()-(getCount()/10))&&!isLoading())
+        {
+            setLoading(true);
+            new AuctionsLoader(this.context,pair).execute(searchString, String.valueOf(page+1));
+        }
+
 
 
         return convertView;

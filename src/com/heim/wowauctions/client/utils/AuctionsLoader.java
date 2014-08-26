@@ -13,6 +13,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+
+import android.util.Pair;
 import com.heim.wowauctions.client.models.Auction;
 import com.heim.wowauctions.client.models.Reply;
 import com.heim.wowauctions.client.ui.ItemListAdapter;
@@ -23,9 +25,12 @@ import java.util.List;
 
 public class AuctionsLoader extends AsyncTask<String, Void, Reply> {
     Context ctx;
+    Pair p;
 
-    public AuctionsLoader(Context ctx) {
+    public AuctionsLoader(Context ctx,Pair p) {
         this.ctx = ctx;
+        this.p = p;
+
     }
 
     @Override
@@ -36,17 +41,19 @@ public class AuctionsLoader extends AsyncTask<String, Void, Reply> {
     @Override
     protected void onPostExecute(Reply reply) {
 
+        if(reply==null)
+            return;
 
         List<Auction> dataset = reply.getAuctions();
         ListActivity lv = (ListActivity) this.ctx;
-
+        lv.getListView().setTag(reply);
         if (dataset != null &&
                 !dataset.isEmpty()) {
             ItemListAdapter adapter = null;
             if (reply.getNumber() == 0) {
                 UIUtils.showToast(this.ctx, reply.getTotalElements() + " items were found");
 
-                adapter = new ItemListAdapter(this.ctx, dataset);
+                adapter = new ItemListAdapter(this.ctx, dataset,p);
                 lv.setListAdapter(adapter);
             } else {
                 adapter = (ItemListAdapter) lv.getListAdapter();
@@ -56,7 +63,7 @@ public class AuctionsLoader extends AsyncTask<String, Void, Reply> {
 
 
             reply.setAuctions(null);
-            lv.getListView().setTag(reply);
+
         } else {
             if (reply.getTotalElements() == 0) {
                 lv.setListAdapter(null);
@@ -64,6 +71,8 @@ public class AuctionsLoader extends AsyncTask<String, Void, Reply> {
             }
 
         }
+        if(lv.getListAdapter()!=null)
+             ((ItemListAdapter)lv.getListAdapter()).setLoading(false);
 
     }
 
@@ -71,19 +80,23 @@ public class AuctionsLoader extends AsyncTask<String, Void, Reply> {
     @Override
     protected Reply doInBackground(String... params) {
 
-        String auctions;
+        String auctions=null;
         String searchString = params[0];
+
         Log.v("started", searchString);
-
+           try{
         if (params.length == 1)
-            auctions = NetUtils.getResourceFromUrl("http://10.0.2.2:8080/items?name=" + Uri.encode(searchString));
+            auctions = NetUtils.getResourceFromUrl(p.first+"items?name=" + Uri.encode(searchString),p.second.toString());
         else
-            auctions = NetUtils.getResourceFromUrl("http://10.0.2.2:8080/items?name=" + Uri.encode(searchString) + "&page=" + params[1]);
+            auctions = NetUtils.getResourceFromUrl(p.first+"items?name=" + Uri.encode(searchString) + "&page=" + params[1],p.second.toString());
 
+           }catch (Exception e){e.printStackTrace();}
         Reply reply = null;
         try {
-            reply = AuctionUtils.buildAuctionsFromString(auctions);
-            reply.setSearchString(searchString);
+            if(auctions!=null){
+                reply = AuctionUtils.buildAuctionsFromString(auctions);
+                reply.setSearchString(searchString);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -5,26 +5,23 @@ import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.*;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import com.heim.wowauctions.client.models.Reply;
-import com.heim.wowauctions.client.ui.InfiniteScrollListener;
 import com.heim.wowauctions.client.ui.ItemListAdapter;
 import com.heim.wowauctions.client.ui.SearchDialog;
 import com.heim.wowauctions.client.ui.WebActivity;
+import com.heim.wowauctions.client.utils.AuctionsApplication;
 import com.heim.wowauctions.client.utils.AuctionsLoader;
 import com.heim.wowauctions.client.utils.ItemStatisticsLoader;
 
 public class ItemPriceChartActivity extends ListActivity {
 
-
+    Pair p;
     /**
      * Called when the activity is first created.
      */
@@ -36,15 +33,19 @@ public class ItemPriceChartActivity extends ListActivity {
         ActionBar actionBar = getActionBar();
 
         actionBar.show();
+        String key = ((AuctionsApplication) getApplication()).getPrivateKey();
+        String ip =  ((AuctionsApplication) getApplication()).getIpAddress();
 
-        getListView().setOnScrollListener(new InfiniteScrollListener(5) {
-            @Override
-            public void loadMore(int page, int totalItemsCount) {
-                Reply reply = (Reply) getListView().getTag();
-                if (reply != null)
-                    new AuctionsLoader(ItemPriceChartActivity.this).execute(reply.getSearchString(), String.valueOf(reply.getNumber() + 1));
-            }
-        });
+        p = new Pair(ip,key);
+
+//        getListView().setOnScrollListener(new InfiniteScrollListener(5) {
+//            @Override
+//            public void loadMore(int page, int totalItemsCount) {
+//                Reply reply = (Reply) getListView().getTag();
+//                if (reply != null)
+//                    new AuctionsLoader(ItemPriceChartActivity.this).execute(reply.getSearchString(), String.valueOf(reply.getNumber() + 1));
+//            }
+//        });
 
         registerForContextMenu(getListView());
         setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[]{"Search"}));
@@ -57,7 +58,7 @@ public class ItemPriceChartActivity extends ListActivity {
         if (v.getTag() instanceof ItemListAdapter.ViewHolder) {
             l.showContextMenuForChild(v);
         } else {
-            new SearchDialog(this);
+            new SearchDialog(this, p);
         }
 
     }
@@ -67,10 +68,10 @@ public class ItemPriceChartActivity extends ListActivity {
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Long itemId = ((ItemListAdapter.ViewHolder) info.targetView.getTag()).itemId;
-        String name =  ((ItemListAdapter.ViewHolder) info.targetView.getTag()).tvItemName.getText().toString();
+        String name = ((ItemListAdapter.ViewHolder) info.targetView.getTag()).tvItemName.getText().toString();
         switch (item.getItemId()) {
             case R.id.chart:
-                new ItemStatisticsLoader(ItemPriceChartActivity.this).execute(itemId);
+                new ItemStatisticsLoader(ItemPriceChartActivity.this, p).execute(itemId);
                 return true;
             case R.id.item_info:
 
@@ -108,7 +109,8 @@ public class ItemPriceChartActivity extends ListActivity {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchView.clearFocus();
-                new AuctionsLoader(ItemPriceChartActivity.this).execute(query.trim());
+
+                new AuctionsLoader(ItemPriceChartActivity.this, p).execute(query.trim());
 
                 return false;  //To change body of implemented methods use File | Settings | File Templates.
             }
@@ -132,7 +134,7 @@ public class ItemPriceChartActivity extends ListActivity {
         switch (item.getItemId()) {
 
             case R.id.search:
-                new SearchDialog(this);
+                new SearchDialog(this, p);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

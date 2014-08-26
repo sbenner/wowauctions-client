@@ -30,10 +30,12 @@ import java.util.Map;
 public class ItemStatisticsLoader extends AsyncTask<Long, Void, Pair<String, XYMultipleSeriesDataset>> {
     private ProgressDialog dialog;
     Context ctx;
+    private Pair pair;
 
-    public ItemStatisticsLoader(Context ctx) {
+    public ItemStatisticsLoader(Context ctx,Pair pair) {
         this.ctx = ctx;
         this.dialog = new ProgressDialog(this.ctx);
+        this.pair=pair;
 
     }
 
@@ -60,7 +62,7 @@ public class ItemStatisticsLoader extends AsyncTask<Long, Void, Pair<String, XYM
 
         long averagePrice = 0;
 
-        String auctions = NetUtils.getResourceFromUrl("http://10.0.2.2:8080/itemchart?id=" + params[0].toString());
+        String auctions = NetUtils.getResourceFromUrl(pair.first+"itemchart?id=" + params[0].toString(),pair.second.toString());
         Map<Long, Long> auctionList = null;
         try {
             auctionList = AuctionUtils.buildArchivedAuctionsFromString(auctions);
