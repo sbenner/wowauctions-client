@@ -36,6 +36,14 @@ public class Auction {
         this.itemId = itemId;
     }
 
+    public String getPpi() {
+        return ppi;
+    }
+
+    public void setPpi(String ppi) {
+        this.ppi = ppi;
+    }
+
 
     public interface BaseView {}
 
@@ -48,6 +56,7 @@ public class Auction {
 
     private String owner;
 
+    private String ppi;
 
     private String ownerRealm;
 
@@ -142,6 +151,7 @@ public class Auction {
                 append("\n owner: ").append(this.getOwner()).
                 append("\n bid: ").append(this.getBid()).
                 append("\n buyout: ").append(this.getBuyout()).
+                append("\n ppi: ").append(this.getPpi()).
                 append("\n quantity: ").append(this.getQuantity()).
                 append("\n timeleft: ").append(this.getTimeLeft())
                 .append("");

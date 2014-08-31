@@ -81,6 +81,8 @@ public class ItemListAdapter extends BaseAdapter {
         public TextView tvOwner;
         public TextView tvBid;
         public TextView tvBuyout;
+        public TextView tvPpi;
+
         public TextView tvQuantity;
         public long itemId;
 
@@ -114,6 +116,7 @@ public class ItemListAdapter extends BaseAdapter {
             viewHolder.tvOwner = (TextView) convertView.findViewById(R.id.owner);
             viewHolder.tvBid = (TextView) convertView.findViewById(R.id.bid);
             viewHolder.tvBuyout = (TextView) convertView.findViewById(R.id.buyout);
+            viewHolder.tvPpi = (TextView) convertView.findViewById(R.id.ppi);
             viewHolder.tvQuantity = (TextView) convertView.findViewById(R.id.quantity);
             convertView.setTag(viewHolder);
 
@@ -151,6 +154,7 @@ public class ItemListAdapter extends BaseAdapter {
             viewHolder.tvOwner.setText("Seller: "+auction.getOwner());
             viewHolder.tvBid.setText("Bid: "+String.valueOf(auction.getBid()));
             viewHolder.tvBuyout.setText("Buyout: "+String.valueOf(auction.getBuyout()));
+            viewHolder.tvPpi.setText("PPI: "+String.valueOf(auction.getPpi()));
             viewHolder.tvQuantity.setText("Quantity: "+String.valueOf(auction.getQuantity()));
             viewHolder.itemId=auction.getItem().getId();
 

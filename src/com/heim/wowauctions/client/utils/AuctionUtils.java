@@ -79,6 +79,7 @@ public class AuctionUtils {
 
             auction.setBid(obj.getString("bid"));
             auction.setBuyout(obj.getString("buyout"));
+            auction.setPpi(obj.getString("ppi"));
             auction.setOwner(obj.getString("owner"));
 
             auction.setQuantity(obj.getInt("quantity"));

@@ -47,9 +47,14 @@ public class ItemPriceChartActivity extends ListActivity {
 //            }
 //        });
 
+
         registerForContextMenu(getListView());
+
+
         setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[]{"Search"}));
     }
+
+
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -92,6 +97,9 @@ public class ItemPriceChartActivity extends ListActivity {
                                     ContextMenu.ContextMenuInfo menuInfo) {
 
         super.onCreateContextMenu(menu, v, menuInfo);
+
+        if(((AdapterView.AdapterContextMenuInfo) menuInfo).targetView.getTag()==null)
+            return;
 
         MenuInflater m = getMenuInflater();
         m.inflate(R.menu.context_menu, menu);

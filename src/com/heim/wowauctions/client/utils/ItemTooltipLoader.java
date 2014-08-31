@@ -36,22 +36,24 @@ public class ItemTooltipLoader extends AsyncTask<String, Void, String> {
             dialog.dismiss();
         }
 
-        String text = null;
+//        try {
+//            JSONObject obj = new JSONObject(reply);
+//            reply = obj.getString("Tooltip");
+//        } catch (JSONException e) {
+//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+//        }
 
-        try {
-            JSONObject obj = new JSONObject(reply);
-            text = obj.getString("Tooltip");
-        } catch (JSONException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        //reply = reply.replace("//media", "http://media").replaceAll("<a\\b[^>]+>","").replaceAll("</a>","");
+//        http://www.wowdb.com/tooltips
 
-        text = text.replace("//media", "http://media").replaceAll("<a\\b[^>]+>","").replaceAll("</a>","");
-        //http://www.wowdb.com/tooltips
+
+
         String summary = "<html>" +
-                "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></script>" +
-                "<script type='text/javascript' src='tt.js'></script>" +
+          //      "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></script>" +
+            //    "<script type='text/javascript' src='tt.js'></script>" +
+                "<link rel='stylesheet' type='text/css' media='all' href='wow.css' />"+
                 "<body bgcolor='#000000'>" +
-                text +
+                reply +
                 "</body></html>";
 
 
@@ -65,13 +67,21 @@ public class ItemTooltipLoader extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... params) {
 
 
-        String url = "http://www.wowdb.com/items/" + params[0] + "/tooltip";
+     //  String url = "http://www.wowdb.com/items/" + params[0] + "/tooltip";
+        String url = "http://us.battle.net/wow/en/item/" + params[0] + "/tooltip";
 
-        String text = NetUtils.getResourceFromUrl(url,null);
-        text = text.substring(1, text.length() - 1);
+        String reply = NetUtils.getResourceFromUrl(url,null);
+        //text = text.substring(1, text.length() - 1);
+          // text=text.replaceAll("\t","");
 
 
-        return text;
+        String icon = reply.substring(reply.indexOf("<span  class=\"icon"),reply.indexOf("</span>")+7);
+        reply=reply.replace(icon,"");
+        reply=icon+reply;
+
+        reply=reply.replaceAll("<a\\b[^>]+>","").replaceAll("</a>","");
+
+        return reply;
     }
 
 
