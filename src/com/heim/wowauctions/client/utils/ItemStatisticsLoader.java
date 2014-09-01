@@ -32,10 +32,10 @@ public class ItemStatisticsLoader extends AsyncTask<Long, Void, Pair<String, XYM
     Context ctx;
     private Pair pair;
 
-    public ItemStatisticsLoader(Context ctx,Pair pair) {
+    public ItemStatisticsLoader(Context ctx, Pair pair) {
         this.ctx = ctx;
         this.dialog = new ProgressDialog(this.ctx);
-        this.pair=pair;
+        this.pair = pair;
 
     }
 
@@ -48,11 +48,15 @@ public class ItemStatisticsLoader extends AsyncTask<Long, Void, Pair<String, XYM
     @Override
     protected void onPostExecute(Pair<String, XYMultipleSeriesDataset> dataset) {
         if (dialog.isShowing()) {
-            dialog.dismiss();
+            dialog.cancel();
         }
 
-        Intent intent = ChartFactory.getTimeChartIntent(ctx, dataset.second, getRenderer(dataset.first), null);
-        ctx.startActivity(intent);
+        if (dataset != null) {
+            Intent intent = ChartFactory.getTimeChartIntent(ctx, dataset.second, getRenderer(dataset.first), null);
+            ctx.startActivity(intent);
+        } else {
+            UIUtils.showToast(this.ctx, "There's no chart data available for this item");
+        }
     }
 
 
@@ -62,13 +66,16 @@ public class ItemStatisticsLoader extends AsyncTask<Long, Void, Pair<String, XYM
 
         long averagePrice = 0;
 
-        String auctions = NetUtils.getResourceFromUrl(pair.first+"itemchart?id=" + params[0].toString(),pair.second.toString());
+        String auctions = NetUtils.getResourceFromUrl(pair.first + "itemchart?id=" + params[0].toString(), pair.second.toString());
         Map<Long, Long> auctionList = null;
         try {
             auctionList = AuctionUtils.buildArchivedAuctionsFromString(auctions);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        if (auctionList.isEmpty())
+            return null;
 
         TimeSeries series = new TimeSeries(String.format("PPI"));
         for (Map.Entry e : auctionList.entrySet()) {
