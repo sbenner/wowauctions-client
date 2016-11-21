@@ -46,10 +46,8 @@ public class AuctionUtils {
     // ,"totalPages":3,"totalElements":14,"firstPage":true,"lastPage":false,"last":false,"size":5,"number":0,"sort":
     // [{"direction":"DESC","property":"buyout","ignoreCase":false,"nullHandling":"NATIVE","ascending":false}],"numberOfElements":5,"first":true}
 
-    public static Reply buildAuctionsFromString(String contents) throws JSONException {
+    public static void setAuctionsFromStringToReply(String contents,Reply reply) throws JSONException {
 
-
-        Reply reply = new Reply();
         List<Auction> auctions = new ArrayList<Auction>();
         JSONObject obj = new JSONObject(contents);
         reply.setFirst(obj.getBoolean("first"));
@@ -88,9 +86,9 @@ public class AuctionUtils {
             auctions.add(auction);
         }
 
+        reply.setData(null);
         reply.setAuctions(auctions);
 
-        return reply;
     }
 
     public static String buildPrice(long price){

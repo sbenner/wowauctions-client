@@ -14,7 +14,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.Pair;
+import com.heim.wowauctions.client.models.Reply;
 import org.achartengine.ChartFactory;
 import org.achartengine.chart.PointStyle;
 import org.achartengine.model.TimeSeries;
@@ -28,8 +30,8 @@ import java.util.Map;
 
 
 public class ItemStatisticsLoader extends AsyncTask<Long, Void, Pair<String, XYMultipleSeriesDataset>> {
-    private ProgressDialog dialog;
     Context ctx;
+    private ProgressDialog dialog;
     private Pair pair;
 
     public ItemStatisticsLoader(Context ctx, Pair pair) {
@@ -59,44 +61,47 @@ public class ItemStatisticsLoader extends AsyncTask<Long, Void, Pair<String, XYM
         }
     }
 
-
     @Override
     protected Pair<String, XYMultipleSeriesDataset> doInBackground(Long... params) {
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 
         long averagePrice = 0;
 
-        String auctions = NetUtils.getResourceFromUrl(pair.first + "itemchart?id=" + params[0].toString(), pair.second.toString());
-        Map<Long, Long> auctionList = null;
-        try {
-            auctionList = AuctionUtils.buildArchivedAuctionsFromString(auctions);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        Reply reply = NetUtils.getDataFromUrl(pair.first + "itemchart?id=" + params[0].toString(), pair.second.toString());
 
-        if (auctionList.isEmpty())
+        String auctions = null;
+        Pair<String, XYMultipleSeriesDataset> rv = null;
+        if (reply.getStatus() != 200) {
             return null;
+        } else {
+            Map<Long, Long> auctionList = null;
+            try {
+                auctionList = AuctionUtils.buildArchivedAuctionsFromString(auctions);
+            } catch (JSONException e) {
+                Log.e("error: ", e.getMessage(), e);
+            }
 
-        TimeSeries series = new TimeSeries(String.format("PPI"));
-        for (Map.Entry e : auctionList.entrySet()) {
-            long price = Long.parseLong(e.getKey().toString());
-            long timestamp = Long.parseLong(e.getValue().toString());
-            averagePrice += price;
-            series.add(new Date(timestamp), price / 10000);
+            TimeSeries series = new TimeSeries(String.format("PPI"));
+            if (auctionList != null) {
+                for (Map.Entry e : auctionList.entrySet()) {
+                    long price = Long.parseLong(e.getKey().toString());
+                    long timestamp = Long.parseLong(e.getValue().toString());
+                    averagePrice += price;
+                    series.add(new Date(timestamp), price / 10000);
 
+                }
+
+                averagePrice = averagePrice / auctionList.size();
+                dataset.addSeries(series);
+                rv = new Pair(AuctionUtils.buildPrice(averagePrice), dataset);
+            }
         }
 
-        averagePrice = averagePrice / auctionList.size();
-
-        dataset.addSeries(series);
-
-        Pair<String, XYMultipleSeriesDataset> rv = new Pair(AuctionUtils.buildPrice(averagePrice), dataset);
 
         return rv;
 
 
     }
-
 
     private XYMultipleSeriesRenderer getRenderer(String title) {
         XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer();

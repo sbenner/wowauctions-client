@@ -11,13 +11,12 @@ package com.heim.wowauctions.client.utils;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.webkit.WebView;
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.heim.wowauctions.client.models.Reply;
 
 
 public class ItemTooltipLoader extends AsyncTask<String, Void, String> {
-    private ProgressDialog dialog;
     WebView webView;
+    private ProgressDialog dialog;
 
     public ItemTooltipLoader(WebView webView) {
         this.webView = webView;
@@ -47,11 +46,10 @@ public class ItemTooltipLoader extends AsyncTask<String, Void, String> {
 //        http://www.wowdb.com/tooltips
 
 
-
         String summary = "<html>" +
-          //      "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></script>" +
-            //    "<script type='text/javascript' src='tt.js'></script>" +
-                "<link rel='stylesheet' type='text/css' media='all' href='wow.css' />"+
+                //      "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></script>" +
+                //    "<script type='text/javascript' src='tt.js'></script>" +
+                "<link rel='stylesheet' type='text/css' media='all' href='wow.css' />" +
                 "<body bgcolor='#000000'>" +
                 reply +
                 "</body></html>";
@@ -62,25 +60,24 @@ public class ItemTooltipLoader extends AsyncTask<String, Void, String> {
 
     }
 
-
     @Override
     protected String doInBackground(String... params) {
 
 
-     //  String url = "http://www.wowdb.com/items/" + params[0] + "/tooltip";
+        //  String url = "http://www.wowdb.com/items/" + params[0] + "/tooltip";
         String url = "http://us.battle.net/wow/en/item/" + params[0] + "/tooltip";
 
-        String reply = NetUtils.getResourceFromUrl(url,null);
-        //text = text.substring(1, text.length() - 1);
-          // text=text.replaceAll("\t","");
+        String reply = null;
+        Reply response = NetUtils.getDataFromUrl(url, null);
 
+        if (response.getStatus() == 200) {
+            reply = response.getData();
+            String icon = reply.substring(reply.indexOf("<span  class=\"icon"), reply.indexOf("</span>") + 7);
+            reply = reply.replace(icon, "");
+            reply = icon + reply;
+            reply = reply.replaceAll("<a\\b[^>]+>", "").replaceAll("</a>", "");
 
-        String icon = reply.substring(reply.indexOf("<span  class=\"icon"),reply.indexOf("</span>")+7);
-        reply=reply.replace(icon,"");
-        reply=icon+reply;
-
-        reply=reply.replaceAll("<a\\b[^>]+>","").replaceAll("</a>","");
-
+        }
         return reply;
     }
 

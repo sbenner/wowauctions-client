@@ -13,7 +13,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import android.util.Pair;
 import com.heim.wowauctions.client.models.Auction;
 import com.heim.wowauctions.client.models.Reply;
@@ -27,7 +26,7 @@ public class AuctionsLoader extends AsyncTask<String, Void, Reply> {
     Context ctx;
     Pair p;
 
-    public AuctionsLoader(Context ctx,Pair p) {
+    public AuctionsLoader(Context ctx, Pair p) {
         this.ctx = ctx;
         this.p = p;
 
@@ -40,12 +39,15 @@ public class AuctionsLoader extends AsyncTask<String, Void, Reply> {
 
     @Override
     protected void onPostExecute(Reply reply) {
-
-        if(reply==null)
+        ListActivity lv = (ListActivity) this.ctx;
+        if (reply.getStatus()!=200) {
+            lv.setListAdapter(null);
+            UIUtils.showToast(this.ctx, reply.getError());
             return;
+        }
 
         List<Auction> dataset = reply.getAuctions();
-        ListActivity lv = (ListActivity) this.ctx;
+
         lv.getListView().setTag(reply);
         if (dataset != null &&
                 !dataset.isEmpty()) {
@@ -53,7 +55,7 @@ public class AuctionsLoader extends AsyncTask<String, Void, Reply> {
             if (reply.getNumber() == 0) {
                 UIUtils.showToast(this.ctx, reply.getTotalElements() + " items were found");
 
-                adapter = new ItemListAdapter(this.ctx, dataset,p);
+                adapter = new ItemListAdapter(this.ctx, dataset, p);
                 lv.setListAdapter(adapter);
             } else {
                 adapter = (ItemListAdapter) lv.getListAdapter();
@@ -71,34 +73,31 @@ public class AuctionsLoader extends AsyncTask<String, Void, Reply> {
             }
 
         }
-        if(lv.getListAdapter()!=null)
-             ((ItemListAdapter)lv.getListAdapter()).setLoading(false);
+        if (lv.getListAdapter() != null)
+            ((ItemListAdapter) lv.getListAdapter()).setLoading(false);
 
     }
-
 
     @Override
     protected Reply doInBackground(String... params) {
 
-        String auctions=null;
         String searchString = params[0];
 
         Log.v("started", searchString);
-           try{
-        if (params.length == 1)
-            auctions = NetUtils.getResourceFromUrl(p.first+"items?name=" + Uri.encode(searchString),p.second.toString());
-        else
-            auctions = NetUtils.getResourceFromUrl(p.first+"items?name=" + Uri.encode(searchString) + "&page=" + params[1],p.second.toString());
-
-           }catch (Exception e){e.printStackTrace();}
         Reply reply = null;
         try {
-            if(auctions!=null){
-                reply = AuctionUtils.buildAuctionsFromString(auctions);
-                reply.setSearchString(searchString);
+            if (params.length == 1) {
+                reply = NetUtils.getDataFromUrl(p.first + "items?name=" + Uri.encode(searchString), p.second.toString());
+            } else {
+                reply = NetUtils.getDataFromUrl(p.first + "items?name=" + Uri.encode(searchString) + "&page=" + params[1], p.second.toString());
             }
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+            if(reply.getStatus()==200){
+              AuctionUtils.setAuctionsFromStringToReply(reply.getData(),reply);
+            }
+
+        } catch (Exception e) {
+            Log.e("error: ", e.getMessage());
         }
 
         return reply;

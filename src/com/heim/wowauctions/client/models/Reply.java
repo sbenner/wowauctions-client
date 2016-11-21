@@ -10,7 +10,8 @@ import java.util.List;
  */
 public class Reply {
 
-
+    private int status;
+    private String error;
     private int totalPages;
     private int totalElements;
     private boolean firstPage;
@@ -21,9 +22,10 @@ public class Reply {
     private boolean first;
     private boolean last;
     private String searchString;
-
+    private String data;
 
     private List<Auction> auctions;
+
 
     public int getTotalPages() {
         return totalPages;
@@ -97,19 +99,43 @@ public class Reply {
         this.last = last;
     }
 
-    public List<Auction> getAuctions() {
-        return auctions;
-    }
-
-    public void setAuctions(List<Auction> auctions) {
-        this.auctions = auctions;
-    }
-
     public String getSearchString() {
         return searchString;
     }
 
     public void setSearchString(String searchString) {
         this.searchString = searchString;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
+    }
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
+
+    public List<Auction> getAuctions() {
+        return auctions;
+    }
+
+    public void setAuctions(List<Auction> auctions) {
+        this.auctions = auctions;
     }
 }
