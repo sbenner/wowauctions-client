@@ -66,17 +66,16 @@ public class ItemStatisticsLoader extends AsyncTask<Long, Void, Pair<String, XYM
         XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 
         long averagePrice = 0;
-
         Reply reply = NetUtils.getDataFromUrl(pair.first + "itemchart?id=" + params[0].toString(), pair.second.toString());
 
-        String auctions = null;
         Pair<String, XYMultipleSeriesDataset> rv = null;
         if (reply.getStatus() != 200) {
             return null;
         } else {
             Map<Long, Long> auctionList = null;
             try {
-                auctionList = AuctionUtils.buildArchivedAuctionsFromString(auctions);
+
+                auctionList = AuctionUtils.buildArchivedAuctionsFromString(reply.getData());
             } catch (JSONException e) {
                 Log.e("error: ", e.getMessage(), e);
             }
@@ -96,11 +95,7 @@ public class ItemStatisticsLoader extends AsyncTask<Long, Void, Pair<String, XYM
                 rv = new Pair(AuctionUtils.buildPrice(averagePrice), dataset);
             }
         }
-
-
         return rv;
-
-
     }
 
     private XYMultipleSeriesRenderer getRenderer(String title) {

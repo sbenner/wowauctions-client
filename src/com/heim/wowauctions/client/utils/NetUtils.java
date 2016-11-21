@@ -77,6 +77,7 @@ public class NetUtils {
                     sb.append(line);
                 }
 
+                reply.setData(sb.toString());
 
             }
 
