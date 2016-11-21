@@ -38,23 +38,9 @@ public class ItemPriceChartActivity extends ListActivity {
 
         p = new Pair(ip,key);
 
-//        getListView().setOnScrollListener(new InfiniteScrollListener(5) {
-//            @Override
-//            public void loadMore(int page, int totalItemsCount) {
-//                Reply reply = (Reply) getListView().getTag();
-//                if (reply != null)
-//                    new AuctionsLoader(ItemPriceChartActivity.this).execute(reply.getSearchString(), String.valueOf(reply.getNumber() + 1));
-//            }
-//        });
-
-
         registerForContextMenu(getListView());
-
-
         setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[]{"Search"}));
     }
-
-
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
@@ -67,7 +53,6 @@ public class ItemPriceChartActivity extends ListActivity {
         }
 
     }
-
 
     @Override
     public boolean onContextItemSelected(MenuItem item) {
@@ -132,10 +117,8 @@ public class ItemPriceChartActivity extends ListActivity {
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
-
         return true;
     }
-
 
     public boolean onOptionsItemSelected(MenuItem item) {
 

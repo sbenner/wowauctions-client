@@ -46,8 +46,6 @@ public class NetUtils {
         Reply reply = new Reply();
 
         try {
-
-
             HttpGet httpGet = null;
             try {
                 httpGet = createGetRequest(url, key);
@@ -56,7 +54,6 @@ public class NetUtils {
             }
 
             DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
-
             defaultHttpClient.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
 
             HttpResponse response = defaultHttpClient.execute(httpGet);
@@ -76,17 +73,12 @@ public class NetUtils {
                 while ((line = br.readLine()) != null) {
                     sb.append(line);
                 }
-
                 reply.setData(sb.toString());
-
             }
 
         } catch (ClientProtocolException e) {
-
             Log.e("error", e.getMessage(), e);
-
         } catch (IOException e) {
-
             Log.e("error", e.getMessage(), e);
         }
 

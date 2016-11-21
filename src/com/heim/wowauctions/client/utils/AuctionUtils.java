@@ -1,5 +1,6 @@
 package com.heim.wowauctions.client.utils;
 
+import android.util.Log;
 import com.heim.wowauctions.client.models.ArchivedAuction;
 
 import com.heim.wowauctions.client.models.Auction;
@@ -113,7 +114,7 @@ public class AuctionUtils {
 
         }catch (Exception e){
             System.out.println(price);
-            e.printStackTrace();
+            Log.e("error", e.getMessage(), e);
         }
 
         return newprice;

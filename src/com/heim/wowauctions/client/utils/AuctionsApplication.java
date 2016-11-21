@@ -1,6 +1,7 @@
 package com.heim.wowauctions.client.utils;
 
 import android.app.Application;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +28,7 @@ public class AuctionsApplication extends Application {
                     getResources().getAssets().open("wowac.properties");
             props.load(inputStream);
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            Log.e("error", e.getMessage(), e);
         }
         setPrivateKey(props.getProperty("private.key"));
         setIpAddress(props.getProperty("prod.ip"));

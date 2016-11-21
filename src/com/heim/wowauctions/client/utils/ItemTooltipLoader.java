@@ -35,35 +35,17 @@ public class ItemTooltipLoader extends AsyncTask<String, Void, String> {
             dialog.dismiss();
         }
 
-//        try {
-//            JSONObject obj = new JSONObject(reply);
-//            reply = obj.getString("Tooltip");
-//        } catch (JSONException e) {
-//            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-//        }
-
-        //reply = reply.replace("//media", "http://media").replaceAll("<a\\b[^>]+>","").replaceAll("</a>","");
-//        http://www.wowdb.com/tooltips
-
-
         String summary = "<html>" +
-                //      "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js'></script>" +
-                //    "<script type='text/javascript' src='tt.js'></script>" +
                 "<link rel='stylesheet' type='text/css' media='all' href='wow.css' />" +
                 "<body bgcolor='#000000'>" +
                 reply +
                 "</body></html>";
-
-
         webView.loadDataWithBaseURL("file:///android_asset/", summary, "text/html", "UTF-8", null);
-
 
     }
 
     @Override
     protected String doInBackground(String... params) {
-
-
         //  String url = "http://www.wowdb.com/items/" + params[0] + "/tooltip";
         String url = "http://us.battle.net/wow/en/item/" + params[0] + "/tooltip";
 

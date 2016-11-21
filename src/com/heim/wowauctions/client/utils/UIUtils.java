@@ -12,7 +12,6 @@ import android.widget.Toast;
  */
 public class UIUtils {
     public static void showToast(Context context,String msg){
-
         Toast toast = Toast.makeText(context, msg, 10);
         toast.setGravity(Gravity.CENTER| Gravity.CENTER_HORIZONTAL| Gravity.CENTER_VERTICAL, 0, 0);
         toast.show();
