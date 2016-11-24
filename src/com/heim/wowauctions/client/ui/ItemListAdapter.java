@@ -29,7 +29,7 @@ public class ItemListAdapter extends BaseAdapter {
     List dataList;
     Context context;
     ListActivity lv;
-   String searchString;
+    String searchString;
     private boolean isLoading=true;
     int page=0;
     private static LayoutInflater inflater = null;

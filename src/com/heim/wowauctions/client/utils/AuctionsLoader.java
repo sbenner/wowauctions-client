@@ -17,7 +17,6 @@ import android.util.Pair;
 import com.heim.wowauctions.client.models.Auction;
 import com.heim.wowauctions.client.models.Reply;
 import com.heim.wowauctions.client.ui.ItemListAdapter;
-import org.json.JSONException;
 
 import java.util.List;
 
@@ -39,8 +38,10 @@ public class AuctionsLoader extends AsyncTask<String, Void, Reply> {
 
     @Override
     protected void onPostExecute(Reply reply) {
+
+
         ListActivity lv = (ListActivity) this.ctx;
-        if (reply.getStatus()!=200) {
+        if (reply.getStatus() != 200) {
             lv.setListAdapter(null);
             UIUtils.showToast(this.ctx, reply.getError());
             return;
@@ -82,24 +83,30 @@ public class AuctionsLoader extends AsyncTask<String, Void, Reply> {
     protected Reply doInBackground(String... params) {
 
         String searchString = params[0];
-
-        Log.v("started", searchString);
         Reply reply = null;
-        try {
-            if (params.length == 1) {
-                reply = NetUtils.getDataFromUrl(p.first + "items?name=" + Uri.encode(searchString), p.second.toString());
-            } else {
-                reply = NetUtils.getDataFromUrl(p.first + "items?name=" + Uri.encode(searchString) + "&page=" + params[1], p.second.toString());
+        if (searchString == null) {
+            reply = new Reply();
+            reply.setError("no search string provided");
+            reply.setStatus(500);
+        } else {
+            Log.v("started", searchString);
+            try {
+                if (params.length == 1) {
+                    reply = NetUtils.getDataFromUrl(p.first + "items?name=" + Uri.encode(searchString), p.second.toString());
+                } else {
+                    reply = NetUtils.getDataFromUrl(p.first + "items?name=" + Uri.encode(searchString) + "&page=" + params[1], p.second.toString());
+                }
+
+                if (reply.getStatus() == 200) {
+                    AuctionUtils.setAuctionsFromStringToReply(reply.getData(), reply);
+                }
+
+                reply.setSearchString(searchString);
+            } catch (Exception e) {
+                Log.e("error: ", e.getMessage());
             }
 
-            if(reply.getStatus()==200){
-              AuctionUtils.setAuctionsFromStringToReply(reply.getData(),reply);
-            }
-
-        } catch (Exception e) {
-            Log.e("error: ", e.getMessage());
         }
-
         return reply;
 
     }
