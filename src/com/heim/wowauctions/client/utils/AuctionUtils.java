@@ -1,17 +1,20 @@
 package com.heim.wowauctions.client.utils;
 
 import android.util.Log;
+
 import com.heim.wowauctions.client.models.ArchivedAuction;
 
 import com.heim.wowauctions.client.models.Auction;
 import com.heim.wowauctions.client.models.Item;
 import com.heim.wowauctions.client.models.Reply;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -24,43 +27,41 @@ import java.util.Map;
 public class AuctionUtils {
 
 
-     public static Map<Long,Long> buildArchivedAuctionsFromString(String contents) throws JSONException {
+    public static Map<Long, Long> buildArchivedAuctionsFromString(String contents) throws JSONException {
 
-        Map<Long,Long> map = new HashMap<Long, Long>();
+        Map<Long, Long> map = new HashMap<Long, Long>();
+        try {
+            JSONObject auctionsArray = new JSONObject(contents);
+            Iterator iterator = auctionsArray.keys();
+            while (iterator.hasNext()){
+                String key = iterator.next().toString();
+                Long val = Long.parseLong(auctionsArray.get(key).toString());
+                map.put(Long.parseLong(key), val);
+            }
 
 
-        JSONArray auctionsArray = new JSONArray(contents);
-
-        for (int i = 0; i < auctionsArray.length(); i++) {
-            JSONObject obj = (JSONObject) auctionsArray.get(i);
-            map.put(obj.getLong("key"),obj.getLong("value"));
-
+        } catch (JSONException jsone) {
+            Log.e("jsone", jsone.getMessage());
         }
 
         return map;
     }
 
-
-
-
-
-    // ,"totalPages":3,"totalElements":14,"firstPage":true,"lastPage":false,"last":false,"size":5,"number":0,"sort":
-    // [{"direction":"DESC","property":"buyout","ignoreCase":false,"nullHandling":"NATIVE","ascending":false}],"numberOfElements":5,"first":true}
-
-    public static void setAuctionsFromStringToReply(String contents,Reply reply) throws JSONException {
+    public static void setAuctionsFromStringToReply(String contents, Reply reply) throws JSONException {
 
         List<Auction> auctions = new ArrayList<Auction>();
         JSONObject obj = new JSONObject(contents);
-        reply.setFirst(obj.getBoolean("first"));
-        reply.setLast(obj.getBoolean("last"));
-        reply.setTotalElements(obj.getInt("totalElements"));
-        reply.setTotalPages(obj.getInt("totalPages"));
-        reply.setFirstPage(obj.getBoolean("firstPage"));
-        reply.setLastPage(obj.getBoolean("lastPage"));
-        reply.setSize(obj.getInt("size"));
-        reply.setNumber(obj.getInt("number"));
-        reply.setNumberOfElements(obj.getInt("numberOfElements"));
-
+        try {
+            reply.setFirst(obj.getBoolean("first"));
+            reply.setLast(obj.getBoolean("last"));
+            reply.setTotalElements(obj.getInt("totalElements"));
+            reply.setTotalPages(obj.getInt("totalPages"));
+            reply.setSize(obj.getInt("size"));
+            reply.setNumber(obj.getInt("number"));
+            reply.setNumberOfElements(obj.getInt("numberOfElements"));
+        } catch (JSONException jse) {
+            Log.e("jsonerr", jse.getMessage());
+        }
         JSONArray auctionsArray = obj.getJSONArray("content");
 
         for (int i = 0; i < auctionsArray.length(); i++) {
@@ -92,27 +93,26 @@ public class AuctionUtils {
 
     }
 
-    public static String buildPrice(long price){
-        String newprice="";
-        try{
+    public static String buildPrice(long price) {
+        String newprice = "";
+        try {
             String oldprice = Long.toString(price);
 
             int len = oldprice.length();
-            if(len>4)
-            {   newprice = oldprice.substring(0, len-4) + "g ";
-                newprice += oldprice.substring(len-4, len-2) + "s ";
-                newprice += oldprice.substring(len-2,len) + "c";
+            if (len > 4) {
+                newprice = oldprice.substring(0, len - 4) + "g ";
+                newprice += oldprice.substring(len - 4, len - 2) + "s ";
+                newprice += oldprice.substring(len - 2, len) + "c";
             }
-            if(len>2&&len<=4)
-            {
-                newprice += oldprice.substring(0, len-2) + "s ";
-                newprice += oldprice.substring(len-2,len) + "c";
+            if (len > 2 && len <= 4) {
+                newprice += oldprice.substring(0, len - 2) + "s ";
+                newprice += oldprice.substring(len - 2, len) + "c";
 
             }
-            if(len<=2)
-                newprice += oldprice.substring(0,len) + "c";
+            if (len <= 2)
+                newprice += oldprice.substring(0, len) + "c";
 
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(price);
             Log.e("error", e.getMessage(), e);
         }

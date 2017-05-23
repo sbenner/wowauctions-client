@@ -2,6 +2,7 @@ package com.heim.wowauctions.client.utils;
 
 import android.util.Log;
 import com.heim.wowauctions.client.models.Reply;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;

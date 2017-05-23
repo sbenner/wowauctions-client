@@ -61,6 +61,7 @@ public class AuctionsLoader extends AsyncTask<String, Void, Reply> {
             } else {
                 adapter = (ItemListAdapter) lv.getListAdapter();
                 adapter.addAll(dataset);
+                lv.setListAdapter(adapter);
                 adapter.notifyDataSetChanged();
             }
 
