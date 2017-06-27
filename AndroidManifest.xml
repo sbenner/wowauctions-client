@@ -3,7 +3,7 @@
           package="com.heim.wowauctions.client"
         >
     <!--android:hardwareAccelerated="false"-->
-    <uses-sdk android:minSdkVersion="16"/>
+    <uses-sdk android:minSdkVersion="12"/>
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <application android:icon="@drawable/timeismoney" android:name=".utils.AuctionsApplication" android:label="@string/app_name"
