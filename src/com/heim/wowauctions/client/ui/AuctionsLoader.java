@@ -1,4 +1,4 @@
-package com.heim.wowauctions.client.utils;
+package com.heim.wowauctions.client.ui;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,6 +17,9 @@ import android.util.Pair;
 import com.heim.wowauctions.client.models.Auction;
 import com.heim.wowauctions.client.models.Reply;
 import com.heim.wowauctions.client.ui.ItemListAdapter;
+import com.heim.wowauctions.client.utils.AuctionUtils;
+import com.heim.wowauctions.client.utils.NetUtils;
+import com.heim.wowauctions.client.utils.UIUtils;
 
 import java.util.List;
 

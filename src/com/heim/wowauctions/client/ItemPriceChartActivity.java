@@ -15,9 +15,8 @@ import android.widget.SearchView;
 import com.heim.wowauctions.client.ui.ItemListAdapter;
 import com.heim.wowauctions.client.ui.SearchDialog;
 import com.heim.wowauctions.client.ui.WebActivity;
-import com.heim.wowauctions.client.utils.AuctionsApplication;
-import com.heim.wowauctions.client.utils.AuctionsLoader;
-import com.heim.wowauctions.client.utils.ItemStatisticsLoader;
+import com.heim.wowauctions.client.ui.AuctionsLoader;
+import com.heim.wowauctions.client.ui.ItemStatisticsLoader;
 
 public class ItemPriceChartActivity extends ListActivity {
 

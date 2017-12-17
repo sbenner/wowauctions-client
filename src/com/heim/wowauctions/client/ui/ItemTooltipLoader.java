@@ -1,4 +1,4 @@
-package com.heim.wowauctions.client.utils;
+package com.heim.wowauctions.client.ui;
 
 /**
  * Created with IntelliJ IDEA.
@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.webkit.WebView;
 import com.heim.wowauctions.client.models.Reply;
+import com.heim.wowauctions.client.utils.NetUtils;
 
 
 public class ItemTooltipLoader extends AsyncTask<String, Void, String> {

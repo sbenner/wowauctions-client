@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.heim.wowauctions.client.R;
 import com.heim.wowauctions.client.models.Auction;
 import com.heim.wowauctions.client.models.Reply;
-import com.heim.wowauctions.client.utils.AuctionsLoader;
 
 import java.util.List;
 

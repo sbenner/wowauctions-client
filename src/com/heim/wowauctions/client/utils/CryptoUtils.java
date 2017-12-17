@@ -18,14 +18,14 @@ import java.util.*;
  * Date: 8/25/14
  * Time: 9:28 PM
  */
-public class CryptoUtils {
+class CryptoUtils {
 
-    public static final String APIKEY_HEADER = "apikey";
-    public static final String TIMESTAMP_HEADER = "timestamp";
+    private static final String APIKEY_HEADER = "apikey";
+    private static final String TIMESTAMP_HEADER = "timestamp";
 
-    public static final List<String> SIGNATURE_KEYWORDS = Arrays.asList(APIKEY_HEADER, TIMESTAMP_HEADER);
+    private static final List<String> SIGNATURE_KEYWORDS = Arrays.asList(APIKEY_HEADER, TIMESTAMP_HEADER);
 
-    public static  String createSignature(HttpRequestBase method,String privateKey) throws Exception {
+    static  String createSignature(HttpRequestBase method, String privateKey) throws Exception {
 
 
         String sortedUrl = createSortedUrl(method);
@@ -42,7 +42,7 @@ public class CryptoUtils {
 
     }
 
-    public static String createSortedUrl( HttpRequestBase method) {
+    private static String createSortedUrl(HttpRequestBase method) {
 
 
         TreeMap<String, String> headersAndParams = new TreeMap<String, String>();
@@ -61,7 +61,7 @@ public class CryptoUtils {
 
     }
 
-    public static String createSortedUrl(String url, TreeMap<String, String> headersAndParams) {
+    private static String createSortedUrl(String url, TreeMap<String, String> headersAndParams) {
         // build the url with headers and parms sorted
         String params = headersAndParams.get("query") != null ? headersAndParams.get("query") : "";
 

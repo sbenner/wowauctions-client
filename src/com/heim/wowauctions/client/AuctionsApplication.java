@@ -1,4 +1,4 @@
-package com.heim.wowauctions.client.utils;
+package com.heim.wowauctions.client;
 
 import android.app.Application;
 import android.util.Log;

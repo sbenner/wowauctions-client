@@ -13,8 +13,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.util.Pair;
 import android.widget.EditText;
-import com.heim.wowauctions.client.utils.AuctionsApplication;
-import com.heim.wowauctions.client.utils.AuctionsLoader;
 
 public class SearchDialog extends AlertDialog.Builder {
 

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import com.heim.wowauctions.client.utils.ItemTooltipLoader;
 
 /**
  * Created with IntelliJ IDEA.
