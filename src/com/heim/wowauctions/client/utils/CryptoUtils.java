@@ -67,6 +67,7 @@ public class CryptoUtils {
 
         StringBuilder sb = new StringBuilder();
 
+        url="/wow/v1"+url;
         if (!url.endsWith("?")) url += "?";
         sb.append(url);
 

@@ -70,7 +70,7 @@ public class AuctionUtils {
             JSONObject itemObject = (JSONObject) obj.get("item");
 
             Item item = new Item();
-            item.setId(itemObject.getLong("id"));
+            item.setId(itemObject.getLong("itemId"));
             item.setName(itemObject.getString("name"));
             item.setItemLevel(itemObject.getInt("itemLevel"));
             item.setQuality(itemObject.getInt("quality"));
