@@ -47,8 +47,8 @@ public class ItemTooltipLoader extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-        //  String url = "http://www.wowdb.com/items/" + params[0] + "/tooltip";
-        String url = "http://us.battle.net/wow/en/item/" + params[0] + "/tooltip";
+          String url = "https://www.wowdb.com/items/" + params[0] + "/tooltip";
+        //String url = "http://us.battle.net/wow/en/item/" + params[0] + "/tooltip";
 
         String reply = null;
         Reply response = NetUtils.getDataFromUrl(url, null);

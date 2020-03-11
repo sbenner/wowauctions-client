@@ -5,15 +5,25 @@ import com.heim.wowauctions.client.models.Reply;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.params.ClientPNames;
+
+import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
+import org.apache.http.conn.ssl.SSLSocketFactory;
+import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocket;
 import java.io.BufferedReader;
+import okhttp3.OkHttpClient;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.security.cert.X509Certificate;
 
 /**
  * Created with IntelliJ IDEA.
@@ -21,8 +31,9 @@ import java.io.InputStreamReader;
  * Date: 8/13/14
  * Time: 8:51 PM
  */
-
+import okhttp3.OkHttpClient;
 public class NetUtils {
+
 
     private static HttpGet createGetRequest(String url, String key) throws Exception {
 
@@ -54,8 +65,15 @@ public class NetUtils {
                 Log.e("error", e.getMessage(), e);
             }
 
+
             DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
-            defaultHttpClient.getParams().setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
+
+
+
+
+            defaultHttpClient.getParams()
+                    .setParameter(ClientPNames.ALLOW_CIRCULAR_REDIRECTS, true);
+
 
             HttpResponse response = defaultHttpClient.execute(httpGet);
             HttpEntity entity = response.getEntity();
@@ -77,9 +95,7 @@ public class NetUtils {
                 reply.setData(sb.toString());
             }
 
-        } catch (ClientProtocolException e) {
-            Log.e("error", e.getMessage(), e);
-        } catch (IOException e) {
+        } catch (Exception e) {
             Log.e("error", e.getMessage(), e);
         }
 

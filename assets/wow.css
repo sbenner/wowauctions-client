@@ -1,754 +1,64 @@
-
-html {
-    min-width: 300px;
+/*modified http://static-azeroth.cursecdn.com/current/js/syndication/tt.css to load local css*/
+#db-tooltip-container {
+    position: absolute;
+    z-index: 3000
 }
 
-body {
-    background: #000;
-    color: #efc9a0;
-    font: normal 12px/1.5 Arial, Verdana, sans-serif;
+.wowdb-tooltip .db-tooltip {
+    float: left
 }
 
-html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-em, img, strong, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+.u-typography-format .wowdb-tooltip .db-tooltip {
+    float: none
+}
+
+.wowdb-tooltip .db-tooltip div, .wowdb-tooltip .db-tooltip span, .wowdb-tooltip .db-tooltip h1, .wowdb-tooltip .db-tooltip h2, .wowdb-tooltip .db-tooltip h3, .wowdb-tooltip .db-tooltip h4, .wowdb-tooltip .db-tooltip h5, .wowdb-tooltip .db-tooltip h6, .wowdb-tooltip .db-tooltip p, .wowdb-tooltip .db-tooltip a, .wowdb-tooltip .db-tooltip big, .wowdb-tooltip .db-tooltip del, .wowdb-tooltip .db-tooltip em, .wowdb-tooltip .db-tooltip font, .wowdb-tooltip .db-tooltip img, .wowdb-tooltip .db-tooltip ins, .wowdb-tooltip .db-tooltip q, .wowdb-tooltip .db-tooltip s, .wowdb-tooltip .db-tooltip small, .wowdb-tooltip .db-tooltip strike, .wowdb-tooltip .db-tooltip strong, .wowdb-tooltip .db-tooltip sub, .wowdb-tooltip .db-tooltip sup, .wowdb-tooltip .db-tooltip tt, .wowdb-tooltip .db-tooltip var, .wowdb-tooltip .db-tooltip b, .wowdb-tooltip .db-tooltip u, .wowdb-tooltip .db-tooltip i, .wowdb-tooltip .db-tooltip center, .wowdb-tooltip .db-tooltip dl, .wowdb-tooltip .db-tooltip dt, .wowdb-tooltip .db-tooltip dd, .wowdb-tooltip .db-tooltip ol, .wowdb-tooltip .db-tooltip ul, .wowdb-tooltip .db-tooltip li, .wowdb-tooltip .db-tooltip label, .wowdb-tooltip .db-tooltip table, .wowdb-tooltip .db-tooltip caption, .wowdb-tooltip .db-tooltip tbody, .wowdb-tooltip .db-tooltip tfoot, .wowdb-tooltip .db-tooltip thead, .wowdb-tooltip .db-tooltip tr, .wowdb-tooltip .db-tooltip th, .wowdb-tooltip .db-tooltip td {
     margin: 0;
     padding: 0;
     border: 0;
-    outline: 0
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent
 }
 
-ol, ul {
-    list-style-type: none;
+.wowdb-tooltip .db-tooltip {
+    line-height: 1
 }
 
-/* wow colors */
-
-/* item details and tooltips */
-.color-tooltip-yellow {
-    color: #ffd100 !important;
-}
-
-.color-tooltip-red {
-    color: #f00 !important;
-}
-
-.color-tooltip-green {
-    color: #0f0 !important;
-}
-
-.color-tooltip-blue {
-    color: #71D5FF !important;
-}
-
-.color-tooltip-beige {
-    color: #FFFF98 !important;
-}
-
-/* faction */
-.color-tooltip-alliance {
-    color: #247FAA;
-}
-
-.color-tooltip-horde {
-    color: #b30000;
-}
-
-/* item quality */
-.color-q0, .color-q0 a {
-    color: #9d9d9d !important;
-}
-
-/* poor (gray) */
-.color-q1, .color-q1 a {
-    color: #ffffff !important;
-}
-
-/* common (white) */
-.color-q2, .color-q2 a {
-    color: #1eff00 !important;
-}
-
-/* uncommon (green) */
-.color-q3, .color-q3 a {
-    color: #0081ff !important;
-}
-
-/* #0070dd rare (blue) */
-.color-q4, .color-q4 a {
-    color: #c600ff !important;
-}
-
-/* #a335ee epic (purple) */
-.color-q5, .color-q5 a {
-    color: #ff8000 !important;
-}
-
-/* lengendary (orange) */
-.color-q6, .color-q6 a {
-    color: #e5cc80 !important;
-}
-
-/* artifact (gold) */
-.color-q7, .color-q7 a {
-    color: #e5cc80 !important;
-}
-
-/* heirloom (gold) */
-
-/* class */
-.color-c1, .color-c1 a {
-    color: #c69b6d !important;
-}
-
-/* warrior */
-.color-c2, .color-c2 a {
-    color: #f48cba !important;
-}
-
-/* paladin */
-.color-c3, .color-c3 a, .color-g2 {
-    color: #aad372 !important;
-}
-
-/* hunter */
-.color-c4, .color-c4 a, .color-g1 {
-    color: #fff468 !important;
-}
-
-/* rogue */
-.color-c5, .color-c5 a {
-    color: #f0ebe0 !important;
-}
-
-/* priest */
-.color-c6, .color-c6 a {
-    color: #c41e3b !important;
-}
-
-/* death knight */
-.color-c7, .color-c7 a {
-    color: #2359ff !important;
-}
-
-/* shaman */
-.color-c8, .color-c8 a, .color-g3 {
-    color: #68ccef !important;
-}
-
-/* mage */
-.color-c9, .color-c9 a {
-    color: #9382c9 !important;
-}
-
-/* warlock */
-.color-c10, .color-c10 a {
-    color: #00ffba !important;
-}
-
-/* monk */
-.color-c11, .color-c11 a, .color-g4 {
-    color: #ff7c0a !important;
-}
-
-/* druid */
-
-/* expansion */
-.color-ex0, .color-exp0 {
-    color: #fff468 !important;
-}
-
-/* classic */
-.color-ex1, .color-exp1 {
-    color: #aad372 !important;
-}
-
-/* the burning crusade */
-.color-ex2, .color-exp2 {
-    color: #68ccef !important;
-}
-
-/* wrath of the lich king */
-.color-ex3, .color-exp3 {
-    color: #ff7c0a !important;
-}
-
-/* cataclysm */
-.color-ex4, .color-exp4 {
-    color: #00ffba !important;
-}
-
-/* Mists of Pandaria */
-
-/* 50% opaque dotted underlines for links with a tooltip */
-.color-c1  a.tip {
-    border-bottom: 1px dotted #634e37;
-}
-
-.color-c2  a.tip {
-    border-bottom: 1px dotted #7a465d;
-}
-
-.color-c3  a.tip {
-    border-bottom: 1px dotted #556a39;
-}
-
-.color-c4  a.tip {
-    border-bottom: 1px dotted #807a34;
-}
-
-.color-c5  a.tip {
-    border-bottom: 1px dotted #808080;
-}
-
-.color-c6  a.tip {
-    border-bottom: 1px dotted #620f1e;
-}
-
-.color-c7  a.tip {
-    border-bottom: 1px dotted #122d80;
-}
-
-.color-c8  a.tip {
-    border-bottom: 1px dotted #346678;
-}
-
-.color-c9  a.tip {
-    border-bottom: 1px dotted #4a4165;
-}
-
-.color-c11 a.tip {
-    border-bottom: 1px dotted #803e05;
-}
-
-.color-c1  a.tip, .border-c1 {
-    border-color: #634e37;
-}
-
-.color-c2  a.tip, .border-c2 {
-    border-color: #7a465d;
-}
-
-.color-c3  a.tip, .border-c3 {
-    border-color: #556a39;
-}
-
-.color-c4  a.tip, .border-c4 {
-    border-color: #807a34;
-}
-
-.color-c5  a.tip, .border-c5 {
-    border-color: #808080;
-}
-
-.color-c6  a.tip, .border-c6 {
-    border-color: #620f1e;
-}
-
-.color-c7  a.tip, .border-c7 {
-    border-color: #122d80;
-}
-
-.color-c8  a.tip, .border-c8 {
-    border-color: #346678;
-}
-
-.color-c9  a.tip, .border-c9 {
-    border-color: #4a4165;
-}
-
-.color-c11 a.tip, .border-c11 {
-    border-color: #803e05;
-}
-
-/* difficulty */
-.color-d1, .color-d1 a {
-    color: #ff8040 !important;
-}
-
-/* orange */
-.color-d2, .color-d2 a {
-    color: #ffff00 !important;
-}
-
-/* yellow */
-.color-d3, .color-d3 a {
-    color: #40bf40 !important;
-}
-
-/* green */
-.color-d4, .color-d4 a {
-    color: #808080 !important;
-}
-
-/* gray */
-.color-d5, .color-d5 a {
-    color: #88aaff !important;
-}
-
-/* light blue */
-.color-d6, .color-d6 a {
-    color: #ff0000 !important;
-}
-
-/* red */
-
-/* skill difficulty */
-.color-s0 {
-    color: red;
-}
-
-.color-s1 {
-    color: #FF8040;
-}
-
-.color-s2 {
-    color: #FFFF00;
-}
-
-.color-s3 {
-    color: #40BF40;
-}
-
-.color-s4 {
-    color: #808080;
-}
-
-/* link hover color for the above */
-a.color-q0:hover, a.color-q1:hover, a.color-q2:hover, a.color-q3:hover, a.color-q4:hover, a.color-q5:hover, a.color-q6:hover, a.color-q7:hover,
-.color-q0 a:hover, .color-q1 a:hover, .color-q2 a:hover, .color-q3 a:hover, .color-q4 a:hover, .color-q5 a:hover, .color-q6 a:hover, .color-q7 a:hover,
-a.color-c1:hover, a.color-c2:hover, a.color-c3:hover, a.color-c4:hover, a.color-c5:hover, a.color-c6:hover, a.color-c7:hover, a.color-c8:hover, a.color-c9:hover, a.color-c10:hover, a.color-c11:hover,
-.color-c1 a:hover, .color-c2 a:hover, .color-c3 a:hover, .color-c4 a:hover, .color-c5 a:hover, .color-c6 a:hover, .color-c7 a:hover, .color-c8 a:hover, .color-c9 a:hover, .color-c10 a:hover, .color-c11 a:hover,
-a.color-d1:hover, a.color-d2:hover, a.color-d3:hover, a.color-d4:hover, a.color-d5:hover, a.color-d6:hover,
-.color-d1 a:hover, .color-d2 a:hover, .color-d3 a:hover, .color-d4 a:hover, .color-d5 a:hover, .color-d6 a:hover {
-    color: #fff !important
-}
-
-/* wow borders */
-
-/* item quality */
-.border-q0 {
-    border-color: #9d9d9d !important;
-}
-
-/* poor (gray) */
-.border-q1 {
-    border-color: #ffffff !important;
-}
-
-/* common (white) */
-.border-q2 {
-    border-color: #1eff00 !important;
-}
-
-/* uncommon (green) */
-.border-q3 {
-    border-color: #0070dd !important;
-}
-
-/* rare (blue) */
-.border-q4 {
-    border-color: #a335ee !important;
-}
-
-/* epic (purple) */
-.border-q5 {
-    border-color: #ff8000 !important;
-}
-
-/* lengendary (orange) */
-.border-q6 {
-    border-color: #e5cc80 !important;
-}
-
-/* artifact (gold) */
-.border-q7 {
-    border-color: #e5cc80 !important;
-}
-
-/* heirloom (gold) */
-
-/* wow background colors */
-
-/* gem */
-.bgcolor-g1 {
-    background-color: gray;
-}
-
-/* Meta */
-.bgcolor-g2 {
-    background-color: red;
-}
-
-/* Red */
-.bgcolor-g4 {
-    background-color: yellow;
-}
-
-/* Yellow */
-.bgcolor-g8 {
-    background-color: blue;
-}
-
-/* Blue */
-.bgcolor-g6 {
-    background-color: orange;
-}
-
-/* Orange */
-.bgcolor-g10 {
-    background-color: purple;
-}
-
-/* Purple */
-.bgcolor-g12 {
-    background-color: green;
-}
-
-/* Green */
-.bgcolor-g14 {
-    background-color: white;
-}
-
-/* Prismatic */
-
-/* skill difficulty */
-.bgcolor-s0 {
-    background-color: red;
-}
-
-.bgcolor-s1 {
-    background-color: #FF8040;
-}
-
-.bgcolor-s2 {
-    background-color: #FFFF00;
-}
-
-.bgcolor-s3 {
-    background-color: #40BF40;
-}
-
-.bgcolor-s4 {
-    background-color: #808080;
-}
-
-/* reusable icons */
-.icon-wowhead {
-    padding-left: 20px;
-    background: url("http://us.battle.net/wow/static/images/icons/wowhead.png") left center no-repeat;
-}
-
-.icon-gold {
-    padding-right: 15px;
-    background: url("http://us.battle.net/wow/static/images/icons/gold.gif") right center no-repeat;
-}
-
-.icon-silver {
-    padding-right: 15px;
-    padding-left: 3px;
-    background: url("http://us.battle.net/wow/static/images/icons/silver.gif") right center no-repeat;
-}
-
-.icon-copper {
-    padding-right: 15px;
-    padding-left: 3px;
-    background: url("http://us.battle.net/wow/static/images/icons/copper.gif") right center no-repeat;
-}
-
-.icon-rss {
-    background: url("http://us.battle.net/wow/static/images/icons/rss.gif") left center no-repeat;
-}
-
-.icon-next {
-    background: url("http://us.battle.net/wow/static/images/icons/next.gif") 0 0 no-repeat;
-}
-
-.icon-next:hover {
-    background-position: 0 -18px;
-}
-
-.icon-dps,
-.icon-healing,
-.icon-healer,
-.icon-tank {
-    float: right;
-    width: 16px;
-    height: 16px;
-    background: url("http://us.battle.net/wow/static/images/icons/roles.png") no-repeat;
-}
-
-.icon-dps {
-    background-position: 0 0;
-}
-
-.icon-healer,
-.icon-healing {
-    background-position: -16px 0;
-}
-
-.icon-tank {
-    background-position: -32px 0;
-}
-
-.icon-heroic-skull {
-    height: 12px;
-    width: 10px;
-    display: inline-block;
-    background: url("http://us.battle.net/wow/static/images/icons/heroic.gif") 50% 50% no-repeat;
-    margin-left: 5px;
-}
-
-.icon-daily-quest {
-    padding-left: 10px;
-    background: url("http://us.battle.net/wow/static/images/icons/daily.gif") 0 50% no-repeat;
-    margin-left: 6px;
-}
-
-.icon-faction-0,
-.icon-faction-1 {
-    height: 15px;
-    width: 15px;
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 6px;
-    background: url("http://us.battle.net/wow/static/images/icons/alliance.png") left center no-repeat;
-}
-
-.icon-faction-1 {
-    background: url("http://us.battle.net/wow/static/images/icons/horde.png") left center no-repeat;
+.wowdb-tooltip .db-tooltip ol, .wowdb-tooltip .db-tooltip ul {
+    list-style: none
 }
 
-.icon-achievement-points {
-    padding-left: 11px;
-    background: url(http://us.battle.net/wow/static/images/icons/achievements.gif) left center no-repeat;
-    margin-left: 4px;
+.wowdb-tooltip .db-tooltip ins {
+    text-decoration: none
 }
 
-/* framed icons */
-.icon-frame {
-    display: inline-block;
-    overflow: hidden;
-    padding: 1px;
-    background-color: #000;
-    background-position: 1px 1px;
-    background-repeat: no-repeat;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    border-radius: 3px;
-    border: 1px solid #434445;
-    border-bottom-color: #2f3032;
-    border-top-color: #b1b2b4;
+.wowdb-tooltip .db-tooltip del {
+    text-decoration: line-through
 }
 
-.icon-frame img {
-    display: block;
-    vertical-align: bottom;
+.wowdb-tooltip .db-tooltip table {
+    border-collapse: collapse;
+    border-spacing: 0
 }
 
-.icon-frame.frame-36,
-.icon-frame.frame-50,
-.icon-frame.frame-56 {
-    height: 56px;
+.wowdb-tooltip .db-tooltip .db-image > img {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
     width: 56px;
-    -moz-box-shadow: #000 0 0 10px;
-    -webkit-box-shadow: #000 0 0 10px;
-    box-shadow: #000 0 0 10px;
+    height: 56px
 }
 
-.icon-frame.frame-12 {
-    height: 12px;
-    width: 12px;
-}
-
-.icon-frame.frame-14 {
-    height: 14px;
-    width: 14px;
-}
-
-.icon-frame.frame-18 {
-    height: 18px;
-    width: 18px;
-}
-
-.icon-frame.frame-27 {
-    height: 27px;
-    width: 27px;
-}
-
-.icon-frame.frame-36 {
-    height: 36px;
-    width: 36px;
-}
-
-.icon-frame.frame-50 {
-    height: 50px;
-    width: 50px;
-}
-
-.icon-frame-gloss {
+.wowdb-tooltip .db-tooltip .db-image {
+    pointer-events: none;
+    position: fixed;
     display: block;
-    height: 76px;
-    width: 76px;
-    background-position: 50% 50%;
-    background-repeat: no-repeat;
-}
-
-.icon-frame-gloss .frame {
-    display: block;
-    background: url("http://us.battle.net/wow/static/images/icons/frames/frame-icon.png") no-repeat;
-    height: 76px;
-    width: 76px;
-}
-
-.circle-frame {
-    border-width: 2px;
-    border-left-color: #B1B2B4;
-    -moz-border-radius: 30px;
-    -webkit-border-radius: 30px;
-    border-radius: 30px;
-}
-
-.table .icon-frame {
-    vertical-align: middle;
-}
-
-/* socket icons */
-.icon-socket {
-    display: block;
-    position: relative;
-    width: 15px;
-    height: 15px;
-}
-
-.icon-socket a.gem {
-    display: block;
-    width: 15px;
-    height: 15px;
-}
-
-.icon-socket a.gem img {
-    display: block;
-    width: 13px;
-    height: 13px;
-    padding: 1px 0 0 1px;
-}
-
-.icon-socket .empty {
-    position: absolute;
-    left: 1px;
-    top: 1px;
-    width: 13px;
-    height: 13px;
-}
-
-.icon-socket .frame {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 15px;
-    height: 15px;
-    background: url("http://us.battle.net/wow/static/images/icons/frames/sockets.png") no-repeat;
-}
-
-.icon-socket.socket-1  .empty {
-    background-color: #29292a;
-}
-
-/* Meta */
-.icon-socket.socket-2  .empty {
-    background-color: #301010;
-}
-
-/* Red */
-.icon-socket.socket-4  .empty {
-    background-color: #403010;
-}
-
-/* Yellow */
-.icon-socket.socket-8  .empty {
-    background-color: #102040;
-}
-
-/* Blue */
-.icon-socket.socket-14 .empty {
-    background-color: #29292a;
-}
-
-/* Prismatic */
-.icon-socket.socket-16 .empty {
-    background-color: #000;
-}
-
-/* Sha-touched */
-.icon-socket.socket-32 .empty {
-    background-color: #29292a;
-}
-
-/* Cogwheel */
-.icon-socket.socket-1  .frame {
-    background-position: -45px 0;
-}
-
-/* Meta */
-.icon-socket.socket-2  .frame {
-    background-position: 0 0;
-}
-
-/* Red */
-.icon-socket.socket-4  .frame {
-    background-position: -15px 0;
-}
-
-/* Yellow */
-.icon-socket.socket-8  .frame {
-    background-position: -30px 0;
-}
-
-/* Blue */
-.icon-socket.socket-6  .frame {
-    background-position: -90px 0;
-}
-
-/* Orange */
-.icon-socket.socket-10 .frame {
-    background-position: -75px 0;
-}
-
-/* Purple */
-.icon-socket.socket-12 .frame {
-    background-position: -105px 0;
-}
-
-/* Green */
-.icon-socket.socket-14 .frame {
-    background-position: -60px 0;
-}
-
-/* Prismatic */
-.icon-socket.socket-16 .frame {
-    background-position: -120px 0;
-}
-
-/* Sha-touched */
-.icon-socket.socket-32 .frame {
-    background-position: -45px 0;
-}
-
-/* Cogwheel */
-
-/* tooltips */
-.character-tooltip {
-    min-width: 150px;
-}
-
-.wiki-tooltip {
-    display: inline-block;
-    vertical-align: top;
-    overflow: hidden;
-    padding-left: 5px;
-    /*-moz-box-shadow: #000 0 0 5px;*/
-    /*-webkit-box-shadow: #000 0 0 5px;*/
-    /*box-shadow: #000 0 0 5px;*/
+    margin-left: -57px;
+    -moz-box-shadow: #000 0 0 5px;
+    -webkit-box-shadow: #000 0 0 5px;
+    box-shadow: #000 0 0 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     border-radius: 5px;
@@ -756,140 +66,736 @@ a.color-d1:hover, a.color-d2:hover, a.color-d3:hover, a.color-d4:hover, a.color-
     border-right: 1px solid #777;
     border-bottom: 1px solid #777;
     border-left: 1px solid #CCC;
-    min-width: 250px;
-    /*width: 56px;*/
-    /*height: 56px*/
-    /*min-width: 250px; */
+    width: 56px;
+    height: 56px
 }
 
-/*.wiki-tooltip .wiki-list { margin-top: 10px; }*/
-/*.wiki-tooltip .wiki-list li { margin: 2px 0; }*/
-/*.wiki-tooltip .wiki-list .item-link { line-height: 16px; }*/
-/*.wiki-tooltip .wiki-list .item-link .frame-14 { float: left; margin-right: 5px; }*/
-/*.wiki-tooltip .indent { padding-left: 10px }*/
-/*.wiki-tooltip .indent-small { padding-left: 5px }*/
+.wowdb-tooltip .db-tooltip .db-description {
+    position: fixed;
+    display: block;
+    background: #112;
+    background: rgba(17, 17, 34, 0.9);
+    border-top: 1px solid #CCC;
+    border-right: 1px solid #777;
+    border-bottom: 1px solid #777;
+    border-left: 1px solid #CCC;
 
-.item-specs .item-link {
-    height: 22px;
-    line-height: 22px;
-    margin: 2px 0;
+    text-align: left;
+    z-index: 65000;
+    color: #fff;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -moz-box-shadow: #000 0 0 5px;
+    -webkit-box-shadow: #000 0 0 5px;
+    box-shadow: #000 0 0 5px;
+    font: normal 12px/1.5 Verdana, sans-serif;
+    width: 300px;
+    height: auto;
+
+}
+
+.wowdb-tooltip .db-tooltip .db-description table {
+    font: normal 12px/1.5 Verdana, sans-serif;
+    color: #fff
+}
+
+.wowdb-tooltip .db-tooltip dl {
+    margin: 0
+}
+
+.wowdb-tooltip .db-tooltip dd, .wowdb-tooltip .db-tooltip p {
+    clear: both
+}
+
+.wowdb-tooltip .db-tooltip .db-title, .wowdb-tooltip .db-tooltip .db-aura-title, .wowdb-tooltip .db-tooltip h2 {
+    font-size: 14px;
+    line-height: 19px;
     font-weight: normal;
-    background-repeat: no-repeat;
+    margin: 0;
+    color: #fff;
+    border: 0
 }
 
-.item-specs {
-    margin-top: 10px;
+.wowdb-tooltip .db-tooltip .db-aura-title .db-image {
+    float: left
 }
 
-.item-specs li {
-    margin: 1px 0;
-    padding: 0;
+.wowdb-tooltip .db-tooltip p {
+    margin: 0
 }
 
-.item-specs .indent {
-    padding-left: 10px
+.wowdb-tooltip .db-tooltip .green, .wowdb-tooltip .db-tooltip .green a {
+    color: #0F0 !important
 }
 
-.item-specs .indent-small {
+.wowdb-tooltip .db-tooltip .yellow {
+    color: #FFD200
+}
+
+.wowdb-tooltip .db-tooltip a {
+    text-decoration: underline
+}
+
+.wowdb-tooltip .db-tooltip a:hover {
+    text-decoration: underline !important
+}
+
+.wowdb-tooltip .db-tooltip h3 {
+    font-weight: bold
+}
+
+.wowdb-tooltip .db-tooltip[data-padded=true] h2, .wowdb-tooltip .db-tooltip[data-padded=true] p, .wowdb-tooltip .db-tooltip[data-padded=true] ul {
+    margin-bottom: 1em
+}
+
+.wowdb-tooltip .db-tooltip h2:last-child, .wowdb-tooltip .db-tooltip p:last-child, .wowdb-tooltip .db-tooltip ul:last-child {
+    margin-bottom: 0
+}
+
+.wowdb-tooltip .db-tooltip ol, .wowdb-tooltip .db-tooltip ul {
     padding-left: 5px
 }
 
-.item-specs .indent-top {
-    padding-top: 10px
+.wowdb-tooltip .db-tooltip ul, .wowdb-tooltip .db-tooltip ul li {
+    list-style-type: disc
 }
 
-.item-specs .icon-socket {
+.wowdb-tooltip .db-tooltip ol, .wowdb-tooltip .db-tooltip ol li {
+    list-style-type: decimal
+}
+
+.wowdb-tooltip .db-tooltip li {
+    margin-left: 20px
+}
+
+.wowdb-tooltip .db-tooltip .db-achievement-criteria {
+    overflow: auto
+}
+
+.wowdb-tooltip .db-tooltip .db-achievement-criteria li {
     float: left;
-    margin-right: 4px;
-    margin-top: 1px;
+    width: 45%;
+    margin-left: 5%
 }
 
-.item-specs .reforge-arrow {
-    position: relative;
-    top: -1px;
-    font-size: 10px;
+.wowdb-tooltip .db-tooltip {
+    padding-bottom: 1em
 }
 
-.item-specs a.color-q1:hover {
-    text-decoration: underline;
+.wowdb-tooltip .db-tooltip .db-description dd {
+    margin-left: 10px
 }
 
-.item-specs .transmog-name {
-    color: #ff80ff
+.wowdb-tooltip .db-tooltip .db-description .db-summary dd {
+    margin-left: 0
 }
 
-li.item-spec-group {
-    margin-top: 10px;
+.wowdb-tooltip .db-tooltip .db-description a {
+    color: #FD0
 }
 
-/* item inline links */
-.item-link {
-    display: inline-block;
-    line-height: 22px;
-    vertical-align: top;
-    white-space: nowrap;
+.wowdb-tooltip .db-tooltip .db-description a:hover {
+    text-decoration: none !important;
+    color: #FE6
 }
 
-.item-link .frame-18 {
-    float: left;
-    margin-right: 5px;
+.wowdb-tooltip .db-tooltip p.db-time-remaining {
+    color: White
 }
 
-.item-link .tip {
-    border-bottom: 0;
+.wowdb-tooltip .db-tooltip .item-extra {
+    color: #FD0;
+    font-size: 95%
 }
 
-.item-link-large {
-    height: 38px;
-    line-height: 38px;
+.wowdb-tooltip .db-tooltip .q0 {
+    color: #A0A0A0 !important
 }
 
-.item-link-large .frame-36 {
-    float: left;
-    margin-right: 10px;
+.wowdb-tooltip .db-tooltip .q1 {
+    color: #FC0 !important
 }
 
-.item-link-small, .item-link-small-right {
-    display: inline-block;
-    height: 18px;
-    line-height: 18px;
-    vertical-align: top;
+.wowdb-tooltip .db-tooltip .q2 {
+    color: #0F0 !important
 }
 
-.item-link-small .frame-14 {
-    float: left;
-    margin-right: 3px;
+.wowdb-tooltip .db-tooltip .q3 {
+    color: #198eff !important
 }
 
-.item-link-small-right .count {
-    float: left;
+.wowdb-tooltip .db-tooltip .q4 {
+    color: #ab48ee !important
 }
 
-.item-link-small-right .frame-14 {
-    float: left;
-    margin-left: 4px;
+.wowdb-tooltip .db-tooltip .q5 {
+    color: #FF8000 !important
 }
 
-/* money color/styles override */
-.price {
+.wowdb-tooltip .db-tooltip .q6 {
+    color: #FF4040 !important
+}
+
+.wowdb-tooltip .db-tooltip .q7 {
+    color: #E5CC80 !important
+}
+
+.wowdb-tooltip .db-tooltip .db-glyph-type {
+    color: #71D5FF
+}
+
+.wowdb-tooltip .db-tooltip .db-description .socket {
+    color: #A0A0A0;
+    padding-left: 22px
+}
+
+.wowdb-tooltip .db-tooltip .db-description .socket[data-socket=Yellow] {
+    background: url('http://www.wowdb.net/images/socket_yellow.gif') left 2px no-repeat
+}
+
+.wowdb-tooltip .db-tooltip .db-description .socket[data-socket=Red] {
+    background: url('http://www.wowdb.net/images/socket_red.gif') left 2px no-repeat
+}
+
+.wowdb-tooltip .db-tooltip .db-description .socket[data-socket=Blue] {
+    background: url('http://www.wowdb.net/images/socket_blue.gif') left 2px no-repeat
+}
+
+.wowdb-tooltip .db-tooltip .db-description .socket[data-socket=Meta] {
+    background: url('http://www.wowdb.net/images/socket_meta.gif') left 2px no-repeat
+}
+
+.wowdb-tooltip .db-tooltip .db-description .socket[data-socket=Prismatic] {
+    background: url('http://www.wowdb.net/images/socket_meta.gif') left 2px no-repeat
+}
+
+.wowdb-tooltip .db-tooltip .db-description .socket[data-socket=Cogwheel] {
+    background: url('http://www.wowdb.net/images/socket_meta.gif') left 2px no-repeat
+}
+
+.wowdb-tooltip .db-tooltip .db-description .socket[data-socket=ShaTouched] {
+    background: url('http://www.wowdb.net/images/socket_meta.gif') left 2px no-repeat
+}
+
+.wowdb-tooltip .db-tooltip span.money {
+    display: inline-block
+}
+
+.wowdb-tooltip .db-tooltip span.money > span {
+    padding-right: 18px;
+    background: right center no-repeat
+}
+
+.wowdb-tooltip .db-tooltip span.money > .money-gold {
+    background-image: url(http://www.wowdb.net/images/money_gold.gif)
+}
+
+.wowdb-tooltip .db-tooltip span.money > .money-silver {
+    background-image: url(http://www.wowdb.net/images/money_silver.gif)
+}
+
+.wowdb-tooltip .db-tooltip span.money > .money-copper {
+    background-image: url(http://www.wowdb.net/images/money_copper.gif)
+}
+
+.wowdb-tooltip .db-tooltip .tooltip-table {
+    width: 100%;
+    border-collapse: collapse
+}
+
+.wowdb-tooltip .db-tooltip .right {
     text-align: right;
+    vertical-align: top
 }
 
-.price .icon-gold {
-    color: #c28a13;
+.wowdb-tooltip .db-tooltip .db-left {
+    float: left;
+    clear: right
+}
+
+.wowdb-tooltip .db-tooltip .db-right {
+    float: right;
+    clear: none
+}
+
+.wowdb-tooltip .db-tooltip .tooltip-table tr td {
+    padding: 0
+}
+
+.wowdb-tooltip .db-tooltip .new-build, .wowdb-tooltip .db-tooltip .old-build {
+    font-size: 90%;
+    font-weight: bold
+}
+
+.wowdb-tooltip .db-tooltip .new-build {
+    color: #0F0
+}
+
+.wowdb-tooltip .db-tooltip .old-build {
+    color: #FF4040
+}
+
+.wowdb-tooltip .db-tooltip ins {
+    color: black;
+    font-weight: bold
+}
+
+.old .wowdb-tooltip .db-tooltip ins {
+    background-color: #faa
+}
+
+.new .wowdb-tooltip .db-tooltip ins {
+    background-color: #afa
+}
+
+.old .wowdb-tooltip .db-tooltip .old-build ins, .new .wowdb-tooltip .db-tooltip .new-build ins {
+    color: inherit;
+    background-color: transparent
+}
+
+.db-details dd {
+    margin: 0 !important
+}
+
+.wowdb-tooltip .db-tooltip .db-subtooltip {
+    padding-top: 1em
+}
+
+.db-subtooltip .db-title {
+    font-size: 100%
+}
+
+.wowdb-tooltip .db-tooltip .advanced-spell-seperator {
+    width: 70%
+}
+
+.wowdb-tooltip .db-tooltip .pet-ability-icon {
+    display: block;
+    float: left;
+    height: 41px;
+    line-height: 41px;
+    padding-left: 45px;
+    background: url('http://www.wowdb.net/images/battle-pet-icons.png') no-repeat;
+    font-size: 130%;
+    white-space: nowrap
+}
+
+.wowdb-tooltip .db-tooltip .pet-ability-icon[data-type=mechanical] {
+    background-position: 0 0
+}
+
+.wowdb-tooltip .db-tooltip .pet-ability-icon[data-type=magic] {
+    background-position: 0 -41px
+}
+
+.wowdb-tooltip .db-tooltip .pet-ability-icon[data-type=humanoid] {
+    background-position: 0 -82px
+}
+
+.wowdb-tooltip .db-tooltip .pet-ability-icon[data-type=flying] {
+    background-position: 0 -123px
+}
+
+.wowdb-tooltip .db-tooltip .pet-ability-icon[data-type=elemental] {
+    background-position: 0 -164px
+}
+
+.wowdb-tooltip .db-tooltip .pet-ability-icon[data-type=dragon] {
+    background-position: 0 -205px
+}
+
+.wowdb-tooltip .db-tooltip .pet-ability-icon[data-type=critter] {
+    background-position: 0 -246px
+}
+
+.wowdb-tooltip .db-tooltip .pet-ability-icon[data-type=beast] {
+    background-position: 0 -287px
+}
+
+.wowdb-tooltip .db-tooltip .pet-ability-icon[data-type=aquatic] {
+    background-position: 0 -328px
+}
+
+.wowdb-tooltip .db-tooltip .pet-ability-icon[data-type=undead] {
+    background-position: 0 -369px
+}
+
+.wowdb-tooltip .db-tooltip .pet-effectiveness, .wowdb-tooltip .db-tooltip .pet-effectiveness-small {
+    text-indent: -99999px;
     display: inline-block;
+    width: 32px;
+    height: 32px
 }
 
-.price .icon-silver {
-    color: #63625d;
-    width: 13px;
+.wowdb-tooltip .db-tooltip .pet-effectiveness-small {
+    width: 24px;
+    height: 24px
+}
+
+.wowdb-tooltip .db-tooltip .pet-effectiveness[data-type=down] {
+    background: url('http://www.wowdb.net/images/pet-weak.png') no-repeat
+}
+
+.wowdb-tooltip .db-tooltip .pet-effectiveness[data-type=up] {
+    background: url('http://www.wowdb.net/images/pet-strong.png') no-repeat
+}
+
+.wowdb-tooltip .db-tooltip .pet-effectiveness-small[data-type=down] {
+    background: url('http://www.wowdb.net/images/pet-weak-small.png') no-repeat
+}
+
+.wowdb-tooltip .db-tooltip .pet-effectiveness-small[data-type=up] {
+    background: url('http://www.wowdb.net/images/pet-strong-small.png') no-repeat
+}
+
+.wowdb-tooltip .db-tooltip .pet-effectiveness-block {
+    height: 41px
+}
+
+.wowdb-tooltip .db-tooltip .pet-effectiveness-table {
+    width: auto;
+    height: 41px
+}
+
+.wowdb-tooltip .db-tooltip .pet-effectiveness-table .updown-icon {
+    vertical-align: middle
+}
+
+.wowdb-tooltip .db-tooltip .pet-effectiveness-table .vs {
+    font-size: 120%;
+    vertical-align: middle;
+    padding: 0 10px
+}
+
+.wowdb-tooltip .db-tooltip .pet-effectiveness-table .pet-ability-icon {
+    text-indent: -99999px
+}
+
+.wowdb-tooltip .db-tooltip .db-description ol p {
+    margin: 0;
+    padding: 0
+}
+
+/*table td.old, table td.new {*/
+/*    vertical-align: top*/
+/*}*/
+
+.wowdb-tooltip .db-tooltip .db-description a {
+    color: inherit;
+    text-decoration: inherit
+}
+
+.wowdb-tooltip .db-tooltip .green a {
+    text-decoration: none
+}
+
+.wowdb-tooltip .db-tooltip .green a:hover {
+    text-decoration: underline !important
+}
+
+.wowdb-tooltip .db-tooltip .itemset {
+    color: #A0A0A0;
+    clear: both
+}
+
+.wowdb-tooltip .db-tooltip .padding-block {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    clear: both
+}
+
+.wowdb-tooltip .db-tooltip .padding-block:empty {
+    margin: 0
+}
+
+.wowdb-tooltip .db-tooltip .padding-block:last-child {
+    margin-bottom: 0
+}
+
+.wowdb-tooltip .db-tooltip .itemset h3 {
+    color: #FD0;
+    font-weight: normal;
+    font-size: 100%
+}
+
+.wowdb-tooltip .db-tooltip h1, .wowdb-tooltip .db-tooltip h2, .wowdb-tooltip .db-tooltip h3, .wowdb-tooltip .db-tooltip h4, .wowdb-tooltip .db-tooltip h5 {
+    font-family: Verdana
+}
+
+.wowdb-tooltip .db-tooltip .db-description .itemset h3 a {
+    color: #FD0 !important
+}
+
+.wowdb-tooltip .db-tooltip .itemset ul {
+    padding-bottom: 1em
+}
+
+.wowdb-tooltip .db-tooltip .itemset ul li {
+    list-style-type: none;
+    margin-left: 6px
+}
+
+.wowdb-tooltip .db-tooltip .itemset a {
+    color: #A0A0A0 !important;
+    text-decoration: none !important
+}
+
+.wowdb-tooltip .db-tooltip .itemset li.active a {
+    color: #ffffd0 !important
+}
+
+.wowdb-tooltip .db-tooltip .itemset p.active, .wowdb-tooltip .db-tooltip .itemset p.active a {
+    color: #0F0 !important
+}
+
+.wowdb-tooltip .db-tooltip .itemset a:hover {
+    text-decoration: underline !important
+}
+
+.wowdb-tooltip .db-tooltip hr {
+    border: solid 1px #777;
+    margin: 8px 0
+}
+
+.wowdb-tooltip .db-tooltip .db-title a, .wowdb-tooltip .db-tooltip h2 a {
+    text-decoration: none
+}
+
+.wowdb-tooltip .db-tooltip .db-title a:hover, .wowdb-tooltip .db-tooltip h2 a:hover {
+    text-decoration: underline !important
+}
+
+.wowdb-tooltip .db-tooltip .rating-conversion {
+    font-size: 90%
+}
+
+.tooltip-table td {
+    background: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+    border: none !important
+}
+
+.wowdb-tooltip .db-tooltip table, .wowdb-tooltip .db-tooltip table td {
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    color: #fff
+}
+
+.wowdb-tooltip .db-tooltip table {
+    table-layout: auto
+}
+
+.wowdb-tooltip .db-tooltip table {
+    table-layout: auto
+}
+
+.wowdb-tooltip .db-tooltip table {
+    table-layout: auto
+}
+
+.wowdb-tooltip .db-tooltip img.socketed-icon {
+    border: 1px outset #555;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: -1px -1px black;
+    position: relative;
+    top: 2px;
+    width: 14px;
+    left: 1px
+}
+
+.wowdb-tooltip .db-tooltip .multi-skill {
+    background: url('http://www.wowdb.net/images/multiskill.png') no-repeat scroll left center;
     display: inline-block;
+    width: 16px;
+    height: 16px;
+    text-indent: -9999px;
+    position: relative;
+    top: 4.5px;
+    cursor: help
 }
 
-.price .icon-copper {
-    color: #a04d00;
-    width: 13px;
-    display: inline-block;
+.wowdb-tooltip .db-tooltip .quest-objectives > li > ul {
+    display: none
 }
 
+.wowdb-tooltip .db-tooltip .rankex {
+    display: block;
+    float: right;
+    font-size: 12px;
+    font-weight: normal;
+    color: #A0A0A0 !important
+}
+
+
+.q, .q a, .color-q, .wowhead-tooltip .q a, .q.fa:before {
+    color: #ffd100 !important
+}
+
+.q-alt, .q-alt a, .q-alt.fa:before {
+    color: #ffd100 !important
+}
+
+.has-content .q-alt, .has-content.q-alt {
+    color: #e5c017 !important
+}
+
+.q0, .q0 a, .color-q0, .wowhead-tooltip .q0 a, .q0.fa:before {
+    color: #9d9d9d !important
+}
+
+.q0-alt, .q0-alt a, .q0-alt.fa:before {
+    color: #9d9d9d !important
+}
+
+.has-content .q0-alt, .has-content.q0-alt {
+    color: #777 !important
+}
+
+.q1, .q1 a, .color-q1, .wowhead-tooltip .q1 a, .q1.fa:before {
+    color: #fff !important
+}
+
+.q1-alt, .q1-alt a, .q1-alt.fa:before {
+    color: #fff !important
+}
+
+.has-content .q1-alt, .has-content.q1-alt {
+    color: #000 !important
+}
+
+.q2, .q2 a, .color-q2, .wowhead-tooltip .q2 a, .q2.fa:before {
+    color: #1eff00 !important
+}
+
+.q2-alt, .q2-alt a, .q2-alt.fa:before {
+    color: #1eff00 !important
+}
+
+.has-content .q2-alt, .has-content.q2-alt {
+    color: #0b0 !important
+}
+
+.q3, .q3 a, .color-q3, .wowhead-tooltip .q3 a, .q3.fa:before {
+    color: #0070dd !important
+}
+
+.q3-alt, .q3-alt a, .q3-alt.fa:before {
+    color: #0070dd !important
+}
+
+.has-content .q3-alt, .has-content.q3-alt {
+    color: #0070dd !important
+}
+
+.q4, .q4 a, .color-q4, .wowhead-tooltip .q4 a, .q4.fa:before {
+    color: #a335ee !important
+}
+
+.q4-alt, .q4-alt a, .q4-alt.fa:before {
+    color: #9345ff !important
+}
+
+.has-content .q4-alt, .has-content.q4-alt {
+    color: #a335ee !important
+}
+
+.q5, .q5 a, .color-q5, .wowhead-tooltip .q5 a, .q5.fa:before {
+    color: #ff8000 !important
+}
+
+.q5-alt, .q5-alt a, .q5-alt.fa:before {
+    color: #ff8000 !important
+}
+
+.has-content .q5-alt, .has-content.q5-alt {
+    color: #ff8000 !important
+}
+
+.q6, .q6 a, .color-q6, .wowhead-tooltip .q6 a, .q6.fa:before {
+    color: #e5cc80 !important
+}
+
+.q6-alt, .q6-alt a, .q6-alt.fa:before {
+    color: #e5cc80 !important
+}
+
+.has-content .q6-alt, .has-content.q6-alt {
+    color: #998856 !important
+}
+
+.q7, .q7 a, .color-q7, .wowhead-tooltip .q7 a, .q7.fa:before {
+    color: #0cf !important
+}
+
+.q7-alt, .q7-alt a, .q7-alt.fa:before {
+    color: #0cf !important
+}
+
+.has-content .q7-alt, .has-content.q7-alt {
+    color: #079 !important
+}
+
+.q8, .q8 a, .color-q8, .wowhead-tooltip .q8 a, .q8.fa:before {
+    color: #0cf !important
+}
+
+.q8-alt, .q8-alt a, .q8-alt.fa:before {
+    color: #0cf !important
+}
+
+.has-content .q8-alt, .has-content.q8-alt {
+    color: #079 !important
+}
+
+.q9, .q9 a, .color-q9, .wowhead-tooltip .q9 a, .q9.fa:before {
+    color: #71d5ff !important
+}
+
+.q9-alt, .q9-alt a, .q9-alt.fa:before {
+    color: #71d5ff !important
+}
+
+.has-content .q9-alt, .has-content.q9-alt {
+    color: #4f95b3 !important
+}
+
+.q10, .q10 a, .color-q10, .wowhead-tooltip .q10 a, .q10.fa:before {
+    color: #ff4040 !important
+}
+
+.q10-alt, .q10-alt a, .q10-alt.fa:before {
+    color: #ff4040 !important
+}
+
+.has-content .q10-alt, .has-content.q10-alt {
+    color: #ff4040 !important
+}
+
+.q13, .q13 a, .color-q13, .wowhead-tooltip .q13 a, .q13.fa:before {
+    color: #ffff98 !important
+}
+
+.q13-alt, .q13-alt a, .q13-alt.fa:before {
+    color: #ffff98 !important
+}
+
+.has-content .q13-alt, .has-content.q13-alt {
+    color: #99995c !important
+}
+
+.q14, .q14 a, .color-q14, .wowhead-tooltip .q14 a, .q14.fa:before {
+    color: #8788ee !important
+}
+
+.q14-alt, .q14-alt a, .q14-alt.fa:before {
+    color: #8788ee !important
+}
+
+.has-content .q14-alt, .has-content.q14-alt {
+    color: #8788ee !important
+}
 

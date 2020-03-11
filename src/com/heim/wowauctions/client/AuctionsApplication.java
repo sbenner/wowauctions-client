@@ -3,8 +3,11 @@ package com.heim.wowauctions.client;
 import android.app.Application;
 import android.util.Log;
 
+import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Properties;
 
 /**
@@ -21,6 +24,8 @@ public class AuctionsApplication extends Application {
 
     @Override
     public void onCreate() {
+        super.onCreate();
+
         Properties props=new Properties();
 
         try {
