@@ -55,7 +55,7 @@
     pointer-events: none;
     position: fixed;
     display: block;
-    margin-left: -57px;
+    margin-left: 0px;
     -moz-box-shadow: #000 0 0 5px;
     -webkit-box-shadow: #000 0 0 5px;
     box-shadow: #000 0 0 5px;
@@ -79,7 +79,8 @@
     border-right: 1px solid #777;
     border-bottom: 1px solid #777;
     border-left: 1px solid #CCC;
-
+    margin-top: 62px;
+    margin-left: 5px;
     text-align: left;
     z-index: 65000;
     color: #fff;

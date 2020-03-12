@@ -13,6 +13,7 @@ import android.os.AsyncTask;
 import android.webkit.WebView;
 import com.heim.wowauctions.client.models.Reply;
 import com.heim.wowauctions.client.utils.NetUtils;
+import org.json.JSONObject;
 
 
 public class ItemTooltipLoader extends AsyncTask<String, Void, String> {
@@ -54,11 +55,19 @@ public class ItemTooltipLoader extends AsyncTask<String, Void, String> {
         Reply response = NetUtils.getDataFromUrl(url, null);
 
         if (response.getStatus() == 200) {
-            reply = response.getData();
-            String icon = reply.substring(reply.indexOf("<span  class=\"icon"), reply.indexOf("</span>") + 7);
-            reply = reply.replace(icon, "");
-            reply = icon + reply;
-            reply = reply.replaceAll("<a\\b[^>]+>", "").replaceAll("</a>", "");
+            try {
+                reply = response.getData();
+                reply = new JSONObject(reply.replaceAll("[\\(\\)]", "")
+                        .replaceAll("\\\\r|\\\\n", "")
+                        .replaceAll("\\s\\s+", "")).getString("Tooltip");
+                String icon = reply.substring(
+                        reply.indexOf("<span  class=\"icon"),
+                        reply.indexOf("</span>") + 7);
+                reply = reply.replace(icon, "");
+                reply = icon + reply;
+                reply = reply.replaceAll("<a\\b[^>]+>", "").replaceAll("</a>", "");
+            } catch (Exception e) {
+            }
 
         }
         return reply;
