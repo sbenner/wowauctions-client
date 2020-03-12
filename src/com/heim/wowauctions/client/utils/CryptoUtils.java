@@ -1,16 +1,18 @@
 package com.heim.wowauctions.client.utils;
 
 import android.util.Base64;
-import org.apache.http.Header;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.methods.HttpRequestBase;
+import okhttp3.Headers;
+import okhttp3.HttpUrl;
+import okhttp3.Request;
 
 import java.security.KeyFactory;
 import java.security.Signature;
 import java.security.spec.EncodedKeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,14 +27,14 @@ class CryptoUtils {
 
     private static final List<String> SIGNATURE_KEYWORDS = Arrays.asList(APIKEY_HEADER, TIMESTAMP_HEADER);
 
-    static  String createSignature(HttpRequestBase method, String privateKey) throws Exception {
+    static String createSignature(Request req, String privateKey) throws Exception {
 
 
-        String sortedUrl = createSortedUrl(method);
+        String sortedUrl = createSortedUrl(req.url(), req.headers());
 
         KeyFactory keyFactory = KeyFactory.getInstance("DSA");
 
-        EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(Base64.decode(privateKey.getBytes("UTF-8"),Base64.NO_WRAP));
+        EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(Base64.decode(privateKey.getBytes("UTF-8"), Base64.NO_WRAP));
 
         Signature sig = Signature.getInstance("DSA");
         sig.initSign(keyFactory.generatePrivate(privateKeySpec));
@@ -42,32 +44,33 @@ class CryptoUtils {
 
     }
 
-    private static String createSortedUrl(HttpRequestBase method) {
+    private static String createSortedUrl(HttpUrl url, Headers headers) {
 
 
         TreeMap<String, String> headersAndParams = new TreeMap<String, String>();
 
-           for(Header header: method.getAllHeaders()){
-               if (SIGNATURE_KEYWORDS.contains(header.getName())) {
-                   headersAndParams.put(header.getName(), header.getValue());
-               }
-           }
+        for (Map.Entry e : headers.toMultimap().entrySet()) {
+            if (SIGNATURE_KEYWORDS.contains(e.getKey().toString())) {
+                headersAndParams.put(e.getKey().toString(), ((List<String>) e.getValue()).get(0));
+            }
+        }
 
-            headersAndParams.put("query", method.getURI().getQuery());
+        headersAndParams.put("query", url.encodedQuery());
 
-            return createSortedUrl(
-                    method.getURI().getPath(),
-                    headersAndParams);
+        return createSortedUrl(
+                url.encodedPath(),
+                headersAndParams);
 
     }
 
     private static String createSortedUrl(String url, TreeMap<String, String> headersAndParams) {
         // build the url with headers and parms sorted
-        String params = headersAndParams.get("query") != null ? headersAndParams.get("query") : "";
+        String params = headersAndParams.get("query") != null ?
+                headersAndParams.get("query") : "";
 
         StringBuilder sb = new StringBuilder();
 
-        url="/wow/v1"+url;
+        url = "/wow/v1" + url;
         if (!url.endsWith("?")) url += "?";
         sb.append(url);
 
