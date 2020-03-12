@@ -2,28 +2,17 @@ package com.heim.wowauctions.client.utils;
 
 import android.util.Log;
 import com.heim.wowauctions.client.models.Reply;
-
+import okhttp3.OkHttpClient;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.params.ClientPNames;
-
-import org.apache.http.conn.ssl.AllowAllHostnameVerifier;
 import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocket;
 import java.io.BufferedReader;
-import okhttp3.OkHttpClient;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.security.cert.X509Certificate;
 
 /**
  * Created with IntelliJ IDEA.
@@ -31,8 +20,29 @@ import java.security.cert.X509Certificate;
  * Date: 8/13/14
  * Time: 8:51 PM
  */
-import okhttp3.OkHttpClient;
+
 public class NetUtils {
+
+    private static OkHttpClient client() {
+        TrustManagerFactory trustManagerFactory = TrustManagerFactory.getInstance(
+                TrustManagerFactory.getDefaultAlgorithm());
+        trustManagerFactory.init((KeyStore) null);
+        TrustManager[] trustManagers = trustManagerFactory.getTrustManagers();
+        if (trustManagers.length != 1 || !(trustManagers[0] instanceof X509TrustManager)) {
+            throw new IllegalStateException("Unexpected default trust managers:"
+                    + Arrays.toString(trustManagers));
+        }
+        X509TrustManager trustManager = (X509TrustManager) trustManagers[0];
+
+        SSLContext sslContext = SSLContext.getInstance("TLS");
+        sslContext.init(null, new TrustManager[]{trustManager}, null);
+        SSLSocketFactory sslSocketFactory = sslContext.getSocketFactory();
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .sslSocketFactory(sslSocketFactory, trustManager)
+                .build();
+        return client;
+    }
 
 
     private static HttpGet createGetRequest(String url, String key) throws Exception {
@@ -67,8 +77,6 @@ public class NetUtils {
 
 
             DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
-
-
 
 
             defaultHttpClient.getParams()
