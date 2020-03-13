@@ -3,6 +3,7 @@ package com.heim.wowauctions.client.ui;
 import android.app.ListActivity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
@@ -40,8 +41,12 @@ public class ItemListAdapter extends BaseAdapter {
         this.context = context;
         this.dataList = data;
         lv = (ListActivity) this.context;
-        Reply reply = (Reply)lv.getListView().getTag();
-        this.pair=pair;
+
+        Reply reply = (Reply) lv.getListView().getTag();
+        lv.getListView().setBackgroundColor(Color.BLACK);
+        lv.getListView().setDivider(new ColorDrawable(Color.parseColor("#FF444444")));
+        lv.getListView().setDividerHeight(2);
+        this.pair = pair;
         searchString = reply.getSearchString();
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 

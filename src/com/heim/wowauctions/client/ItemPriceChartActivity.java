@@ -5,6 +5,8 @@ import android.app.ListActivity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.*;
@@ -12,11 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import com.heim.wowauctions.client.ui.ItemListAdapter;
-import com.heim.wowauctions.client.ui.SearchDialog;
-import com.heim.wowauctions.client.ui.WebActivity;
-import com.heim.wowauctions.client.ui.AuctionsLoader;
-import com.heim.wowauctions.client.ui.ItemStatisticsLoader;
+import com.heim.wowauctions.client.ui.*;
 
 public class ItemPriceChartActivity extends ListActivity {
 
@@ -33,12 +31,16 @@ public class ItemPriceChartActivity extends ListActivity {
 
         actionBar.show();
         String key = ((AuctionsApplication) getApplication()).getPrivateKey();
-        String ip =  ((AuctionsApplication) getApplication()).getIpAddress();
+        String ip = ((AuctionsApplication) getApplication()).getIpAddress();
 
-        p = new Pair(ip,key);
+        p = new Pair(ip, key);
 
         registerForContextMenu(getListView());
-        setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[]{"Search"}));
+        getListView().setBackgroundColor(Color.BLACK);
+        getListView().setDivider(new ColorDrawable(Color.parseColor("#FF444444")));
+        getListView().setDividerHeight(2);
+        setListAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,
+                new String[]{"Search"}));
     }
 
     @Override
